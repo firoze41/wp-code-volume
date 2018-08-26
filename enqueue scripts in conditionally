@@ -1,0 +1,12 @@
+/*-------------------------------------------------------------------------
+# if custom post type publish post 0 then scripe will not load
+# when will get at least 1 post publish then script will load 
+---------------------------------------------------------------------------*/
+
+$count_posts = wp_count_posts('slide'); // here "slide" is the name of post_type
+$count = $count_posts->publish;
+
+if($count > 0){
+    wp_enqueue_style('owl-carousel',plugin_dir_url(__FILE__).'assets/css/owl.carousel.css',array(),PLUGIN_VERSION);
+    wp_enqueue_script('owl-carousel',plugin_dir_url(__FILE__).'assets/js/owl.carousel.min.js',array('jquery'),PLUGIN_VERSION,true);
+}
