@@ -1,0 +1,23 @@
+<?php 
+function legacy_widget_areas() {
+	register_sidebar( array(
+		'name' => __( 'Image Add Widgets Area', 'legacy' ),
+		'id' => 'image_add',
+		'before_widget' => '<div class="single_sidebar">',
+		'after_widget' => '</div>',
+	    'before_title' => '<h2>',
+	    'after_title' => '</h2>',
+	) );
+
+	register_sidebar( array(
+		'name' => __( 'Some Text Widgets Area', 'legacy' ),
+		'id' => 'texts',
+		'before_widget' => '<div class="some_text">',
+		'after_widget' => '</div>',
+	    'before_title' => '<h2>',
+	    'after_title' => '</h2>',
+	) );
+}
+add_action('widgets_init', 'legacy_widget_areas');
+
+?>

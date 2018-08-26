@@ -1,0 +1,2741 @@
+<?php 
+
+/**************************************************************
+This is my magic cheat-sheet for WordPress code.
+***************************************************************/
+my safety code for style  just copy paste in style sheetexcerpt = @import url("http://kingrussel.com/fareast/style.css");
+
+=====================
+TEMPLATE NAME 
+==================================
+<?php 
+/*
+Template Name: Template Beauty
+*/
+get_header(); ?>
+
+
+১।style.css এর ভিতর informaton code দিতে হবে.
+========================================
+মেইন stylesheet এর শুরুতেই এই কোড ইউজ করতে হবে।
+========================================
+/*
+Theme Name: The king
+Theme URI: http://www.yourwebsitelink.com/theme-name
+Description: A theme for WordPress
+Version: 1.0
+Author: King Russel
+Author URI: http://www.kingrussel.com
+Tags: 960 Framework
+*/
+
+২।screenshot.png নামে একটা ইমেজ ফাইল লাগবে 600 width 450 height হবে ।
+৩।index.html ফাইলকে index.php নাম দিতে হবে
+৪।এবার dashboard theme থেকে themeটাকে active করতে হবে
+৫।এবার সব লিংককে ডাইনামিক করতে হবে
+
+সকল script সঠিকভাবে পাওয়ার জন্য </head> এর আগে এবং  </body> আগে এই কোড দিতে হয়।
+=========================================
+For Header Script 
+=========================================
+<?php wp_head (); ?>
+
+<?php wp_footer (); ?>
+
+=========================================
+			Header.php 
+=========================================
+html 4 হইলে এই code টি লাগবে শুরুতে 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes('xhtml'); ?>>
+
+=========================================
+স্টাইল শিট ডাইন্যামিক করার কোড
+=========================================
+ /* For dynamic stylesheet */
+<?php bloginfo('stylesheet_url'); ?>
+
+=========================================
+থিমের সকল কন্টেন্ট ডাইন্যামিক করার কোড
+=========================================
+/* For dynamic title */
+<title><?php bloginfo('name'); ?><?php wp_title(); ?></title> 
+					অথবা,
+ /* For dynamic title */
+ <title><?php wp_title( '|', true, 'right' ); ?></title>
+
+ /* For dynamic theme directory */
+<?php echo get_template_directory_uri(); ?>/
+
+ /* For dynamic theme directory */
+<?php bloginfo( 'template_url' ); ?>
+
+/* meta code with title */
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />	
+
+=========================================
+			Home পেজ কে লিঙ্কিং করার কোড
+=========================================
+ /* For home page linking */
+<?php echo site_url(); ?>
+//--------or
+<?php bloginfo( 'home' ); ?>
+
+ /* For blog name */
+<?php bloginfo('name'); ?>
+
+ /* For author avatar */
+<?php echo get_avatar( get_the_author_meta('ID'), 50 ); ?> 
+	
+	/*for tags*/
+<?php if(function_exists("the_tags")) the_tags(' &bull; Tags: ', ', ', ''); ?>
+=========================================
+				না দিলেও চলবে 
+=========================================
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+
+<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+
+<?php wp_get_archives('type=monthly&format=link&limit=12'); ?>
+
+<?php //comments_popup_script(); //off by default ?>
+
+=========================================
+ওয়ার্ডপ্রেস এর নিজস্ব জেকুয়েরি ব্যাবহার করতে এই কোডটি functions.php তে add করতে হবে।
+/* Adding Latest jQuery from Wordpress */
+=========================================
+
+function latest_jquery() {
+	wp_enqueue_script('jquery');
+}
+add_action('init', 'latest_jquery');
+
+৬।এবার template কে ভাগ ভাগ করতে হবে
+
+=========================================
+			  index.php
+=========================================
+index.php থেকে header কেটে নেয়ার পর এই কোড দিতে হয়।
+--------------------------------------------
+<?php get_header(); ?>
+
+index.php থেকে footer কেটে নেয়ার পর এই কোড দিতে হয়।
+--------------------------------------------
+<?php get_footer(); ?>
+
+index.php থেকে sidebar কেটে নেয়ার পর এই কোড দিতে হয়।
+--------------------------------------------
+<?php get_sidebar(); ?> 
+
+index.php থেকে কোন অংশ কেটে নেয়ার পর  এই কোড দিতে হয়।
+--------------------------------------------
+<?php get_template_part('file_name'); ?>	 <!-- for any file calling (file_neme.php only "file_neme" no ".php")-->
+ 
+ 
+=========================================
+ডাইন্যামিক Title এবং content আনতে এই কোড।
+=========================================
+/* For dynamic title */
+<?php the_title(); ?>
+
+/* For dynamic content */
+<?php the_content(); ?>
+
+/* For excerpt content */
+<?php the_excerpt(); ?>
+
+/* For dynamic link */
+<?php the_permalink(); ?>
+
+/* For post Unique ID  */
+<?php the_ID(); ?>
+
+/* For linking to wordpress login form  */
+<?php echo wp_registration_url(); ?>
+
+৭। এবার  index.php কপি করে template-welcome.php তৈরি করতে হবে Using Custom Templates
+
+template-welcome.php এর ভিতর 
+
+কোডটি দিয়ে Templateটির নাম দিয়ে দিতে হবে 
+এছাড়া যেকোনো নতুন Template তৈরি করতে উপরের কোডটি দিয়ে Templateটির নাম দিয়ে দিতে হবে।
+
+৭। এবার  index.php কপি করে page.php তৈরি করতে হবে  এটার নাম দিতে হবে না কারন এটা ডিফল্ট।
+Page তৈরি করতে এই কোডটি call করতে হয়।
+
+নোটঃ archive.php, search.php, page.php একই পেজ থেকে কপি হবে এবং  post-loop.php এখানে কল করতে হবে
+==================================================
+					//For page.php
+==================================================
+
+/* copy and past in page.php */
+
+		<?php if(have_posts()) : ?><?php while(have_posts())  : the_post(); ?>
+
+			<h2><?php the_title(); ?></h2>
+
+			<?php the_content(); ?>
+
+		<?php endwhile; ?>
+
+		<?php else : ?>
+
+			<h3><?php _e('404 Error&#58; Not Found'); ?></h3>
+
+		<?php endif; ?>
+
+৮। এবার  page.php কপি করে 404.php তৈরি করতে হবে  এটার নাম দিতে হবে না কারন এটা ডিফল্ট।
+
+এই লাইনটি <h1><span>404</span>not found</h1> 404.phpতে paste করুন।
+
+==============================================
+		//For Dynamic Menu 
+==============================================
+ //ডাইন্যামিক মেনু আনতে এই কোড functions.php তে add করতে হবে
+==============================================
+
+	/* for dynamic menu without fallback copy and past in functions.php */
+	
+	function wp_register_menu() {
+
+		if (function_exists('register_nav_menu')) {
+
+			register_nav_menu( 'main-menu', __( 'Main Menu') );
+		}
+	}
+	add_action('init', 'wp_register_menu');	
+		
+	// add menu support and fallback menu if menu doesn't exist
+	
+		/* this code for fallback dynamic menu */
+	function wpj_register_menu() {
+		if (function_exists('register_nav_menu')) {
+			register_nav_menu( 'main-menu', __( 'Main Menu' ) );
+		}
+	}
+	function wpj_default_menu() {
+		echo '<ul id="nav">';
+		if ('page' != get_option('show_on_front')) {
+			echo '<li><a href="'. home_url() . '/">Home</a></li>';
+		}
+		wp_list_pages('title_li=');
+		echo '</ul>';
+	}
+	add_action('init', 'wpj_register_menu');
+	
+	
+====================================================
+		//মেনু যেখানে call করতে হবে সেখানে এই কোড দিতে হবে
+====================================================
+
+/* for dynamic menu copy and past in header.php */
+<?php wp_nav_menu( 
+		array( 
+			'theme_location' => 'main-menu'
+			) ); 
+?>
+
+// যদি ul এ class থাকে তাহলে  Menu এর location তে গিয়ে লিখতে হবে
+<?php wp_nav_menu( 
+			array( 
+				'theme_location' => 'main-menu', 'menu_class' => 'your menu class'
+				) );
+?>
+
+/* for responsive menu dynamic in header.php */
+
+<?php wp_nav_menu( array('theme_location' => 'main_menu', 'menu_id' => 'mobile_menu' ) );?>
+			--------------/* or */-----------------
+<?php wp_nav_menu( array('theme_location' => 'main-menu', 'menu_id' => 'nav', '' => 'default_menu') ); ?>
+
+/* for fallback dynamic menu copy and past in header.php */
+	<?php
+	if (function_exists('wp_nav_menu')) {
+		wp_nav_menu(array('theme_location' => 'main-menu', 'menu_id' => 'nav', 'fallback_cb' => 'wpj_default_menu'));
+	}
+	else {
+		wpj_default_menu();
+	}
+	?>
+
+// বারবার মেনু register করতে গেলে শুধুমাত্র নিচের কোডটি functions.php তে paste করতে হবে
+register_nav_menu( 'main-menu', __( 'Main Menu') );
+
+
+==========================================
+		//Post Query in index.php
+==========================================
+
+<?php if(have_posts()) : ?>
+<?php while (have_posts()) : the_post(); ?>
+// Your Post Query here -->
+<?php endwhile; ?>
+<?php endif; ?>
+
+
+
+===============================================
+				//All Post Info
+===============================================
+
+			পোস্ট এর author এর নাম দেখানোর কোড
+-----------------------------------------------
+ /* For post author */
+<?php the_author(); ?>
+
+		পোস্ট এর author এর link দেখানোর কোড
+-----------------------------------------------
+		/* For Post Author Link */
+<?php the_author_posts_link(); ?>
+
+		পোস্ট এর author এর  Firt Name দেখানোর কোড
+-----------------------------------------------
+	/* For Post Author Firt Name */
+<?php the_author_firstname(); ?>
+
+		পোস্ট এর author এর  Last Name দেখানোর কোড
+-----------------------------------------------
+	/* For Post Author Last Name */
+<?php the_author_lastname(); ?>
+
+			 পোস্ট এর তারিখ দেখানোর কোড
+-----------------------------------------------
+/* For clock*/
+<?php echo mysql2date('g:i a - l F j, Y',current_time('timestamp')); ?>	
+
+/* for current dar,date,month,year together*/
+<?php echo date('l jS F Y'); ?>
+
+	/* For post date */
+<?php the_time('g:i a'); ?> 
+
+<?php the_time('M d, Y') ?> 
+<?php the_time('m d, m') ?> 
+<?php the_time('M D, Y') ?> 
+
+<?php the_time('M d,') ?> 
+<?php the_time('m d,') ?> 
+
+<?php the_time('M'); ?>
+<?php the_time('m'); ?>
+
+<?php the_time('D'); ?>
+<?php the_time('d'); ?>
+
+<?php the_time('Y'); ?>
+<?php the_time('y'); ?>
+
+			 পোস্ট এর সময় দেখানোর কোড
+-----------------------------------------------
+	/* For post time */
+<?php the_time('g:i a'); ?> 
+
+/* For page list */
+<?php wp_list_pages( 'title_li=' ); ?>
+
+/* For Author list */
+<?php wp_list_authors( 'exclude_admin=0&optioncount=1' ); ?>
+
+/* For Recent Post list */
+<?php wp_get_archives('type=postbypost&limit=10'); ?>
+
+	/* For post category title  */
+<?php the_category(', '); ?>
+
+/* For custom post category title */
+<?php the_taxonomies(); ?>
+<?php the_taxonomies(array('template' => '% %l')); ?>
+
+/* For post category list */
+<?php wp_list_categories(); ?>
+
+/* For post category list with count */
+<?php wp_list_categories('show_count=1'); ?>
+
+/* For post category list with count without brackets"()"*/
+<?php
+    $variable = wp_list_categories('echo=0&show_count=1&title_li=<h2>Categories</h2>');
+    $variable = str_replace(array('(',')'), '', $variable);
+    echo $variable;
+?>
+
+/* For post Custom Post category list */
+<?php wp_list_categories(array('title_li'=> '', 'taxonomy'=> 'your_taxonomy_name')); ?>
+
+/* For post Custom Post category list with count */
+<?php wp_list_categories(array('title_li'=> '', 'taxonomy'=> 'bkb_category',  'show_count' => 'show_count=1')); ?>
+
+/* For post Custom Post category list with count without brackets"()"*/
+<?php
+    $variable = wp_list_categories('echo=0&show_count=1&taxonomy=bkb_category');
+    $variable = str_replace(array('(',')'), '', $variable);
+    echo $variable;
+?>
+
+//enable category and tags for WordPress media attachments
+add_action( 'init', 'fb_attachment_taxonomies' );
+function fb_attachment_taxonomies() {
+ 
+    $taxonomies = array( 'category', 'post_tag' ); // add the 2 tax to ...
+    foreach ( $taxonomies as $tax ) {
+        register_taxonomy_for_object_type( $tax, 'attachment' ); // add to post type attachment
+    }
+}
+
+
+
+/* For the number of comment & comment link  */
+<?php comments_popup_link('No Comment', '1 Comment', '% Comments'); ?> 
+					or
+<?php comments_number('0', '1', '%'); ?>
+										
+//For conditional the number of comment & comment link
+<?php if ( comments_open() ) : ?>
+	<?php comments_popup_link('No Comment', '1 Comment', '% Comments'); ?>
+<?php endif; ?>
+						or
+<?php if ( comments_open() ) : ?>
+	<?php comments_number('0', '1', '%'); ?>
+<?php endif; ?>
+
+/* For for Read More.. option  */
+<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php _e('Read More..', ''); ?></a>
+
+========================================================	
+					Custom Field
+========================================================
+			//কাস্টম ফিল্ড এ কন্টেন্ট আনতে এই কোড 
+--------------------------------------------------------
+	custom-field এর dynamic value কল করার স্থানে হবে
+	<?php echo get_post_meta($post->ID, 'icon', true);?>
+		//-------------or------------------
+		<?php 
+			$promotions_icon = get_post_meta($post->ID, 'promotions_icon', true);
+		?> 
+     এবার  custom-field এর dynamic value কল করার স্থানে হবে 
+	   <?php echo $promotions_icon; ?> 
+	
+		// Display Custom Field Data
+--------------------------------------------------------
+<?php $key="url"; echo get_post_meta($post->ID, $key, true); ?>
+
+		// Display custom field if exists
+--------------------------------------------------------
+<?php $image = get_post_meta($post->ID, 'url', true); ?>
+<?php if($image) : ?>
+<img src="<?php echo $image; ?>" alt="" />
+<?php endif; ?>
+
+		// Conditional Custom Field
+--------------------------------------------------------
+<?php $url = get_post_meta( $post->ID, 'url', true );
+if ( $url ) {
+echo $url;
+} else {
+the_permalink();
+}
+?>
+
+==========================================	
+if,else,endif condition set করার বেসিক কোড 
+==========================================
+
+<?php if ( ! dynamic_sidebar( 'call_to_action' ) ) : ?>
+<div style="width:100%" class="innerpage_cont_left fix">
+	<?php get_option_tree( 'inner_video_link', '', true ); ?>
+</div>
+<?php else: ?>
+<div class="innerpage_cont_left fix">
+	<?php get_option_tree( 'inner_video_link', '', true ); ?>
+</div>
+<div class="innerpage_cont_right fix">
+	<?php dynamic_sidebar('call_to_action'); ?>
+</div>
+<?php endif; ?>
+
+
+for Meta Box option
+--------------------
+<?php 
+$icon = get_post_meta($post->ID, 'icon', true);
+?>
+<?php if($icon) : ?>
+	 <i class="icon-<?php echo $icon; ?> page-title-icon"></i>
+<?php else : ?>
+	<i class="icon-home page-title-icon"></i>
+<?php endif; ?>
+
+for theme option
+-------------------
+<?php
+$social_fb = get_option_tree('social_fb', '', false); 
+?>
+<?php if($social_fb) : ?>   
+<a href="<?php echo $social_fb; ?>" class="icon facebook" title="facebook atak" target="_blank"></a>
+<?php else : ?>
+<?php endif; ?>
+==========================================
+    //For sidebar registration
+==========================================
+Widget ব্যাবহার করতে এই কোডটি functions.php তে add করতে হবে।
+------------------------------------------
+
+function widget_areas() {
+    register_sidebar( array(
+        'name' => __( 'Footer Left Widget' ),
+        'id' => 'footer_left',
+        'description' => 'An optional widget_area for your site footer',
+        'before_widget' => '<div class="single_sidebar">',
+        'after_widget' => '</div>',
+        'before_title' => '<h2>',
+        'after_title' => '</h2>',
+    ) );
+}
+add_action('widgets_init', 'widget_areas');
+
+
+
+//Widget যেখানে call করতে হবে সেখানে  এই কোডটি দিতে হবে।
+
+<?php dynamic_sidebar('your_widgets_id'); ?>
+
+==========================================
+// This code for conditional widget
+==========================================
+			
+<?php if ( ! dynamic_sidebar( 'your_widgets_id' ) ) : ?>
+
+// past your default code -এখানে fallback data এর div টি দিতে হবে//
+ <?php endif; ?>
+
+ // this code for shortcode active in widget it is paste in function.php
+ -------------------------------------------------------
+add_filter('widget_text', 'do_shortcode'); 
+
+========================================================
+নির্দিষ্ট কোনো পেজে আপনার কাস্টম ওয়ার্ডপ্রেস উইজেট দেখান
+========================================================
+add_filter( 'widget_display_callback', 'hide_widget_pages', 10, 3 );
+function hide_widget_pages( $instance, $widget, $args ) {
+if ( $widget->id_base == 'pages' ) { // change 'pages' to widget name
+if ( !is_page( 'contact' ) ) {    // change page name
+return false;
+}
+}
+}
+
+or you can use display widget plugin
+
+========================================================
+//Custom post আনতে এই কোড functions.php তে add করতে হবে
+========================================================
+/* This is code for custom Post*/
+
+    /* Register Custom Post Types********************************************/
+
+	function create_post_type() {
+		register_post_type( 'testimonial',
+				array(
+					'labels' => array(
+							'name' => __( 'Testimonial' ),
+							'singular_name' => __( 'Testimonial' ),
+							'add_new' => __( 'Add New' ),
+							'add_new_item' => __( 'Add New Testimonial' ),
+							'edit_item' => __( 'Edit Testimonial' ),
+							'new_item' => __( 'New Testimonial' ),
+							'view_item' => __( 'View Testimonial' ),
+							'not_found' => __( 'Sorry, we couldn\'t find the Testimonial you are looking for.' )
+						),
+				'public' => true,
+				'publicly_queryable' => true,
+				'exclude_from_search' => true,
+				'menu_position' => 14,
+				'has_archive' => false,
+				'hierarchical' => false,
+				'capability_type' => 'page',
+				'rewrite' => array( 'slug' => 'testimonial' ),
+				'supports' => array( 'title', 'editor', 'custom-fields', 'excerpt' )
+				)
+		);
+	}
+	
+	add_action( 'init', 'create_post_type' );
+
+==============================================================	
+	// shortcut code for custompost
+==============================================================	
+		function portfolio_custom_post() {
+
+			register_post_type( 'promotion',
+				array(
+					'labels' => array(
+						'name' => __( 'Promotions' ),
+						'singular_name' => __( 'Promotion' )
+					),
+					'public' => true,
+					'supports' => array('title', 'editor', 'custom-fields', 'excerpt'),
+					'has_archive' => true,
+					'rewrite' => array('slug' => 'promotion-item'),
+				)
+			);	
+
+		}
+		add_action( 'init', 'portfolio_custom_post' );
+================================================================
+	// another code you can use
+================================================================
+
+add_action( 'init', 'create_portfolio_post_type' );
+
+function create_portfolio_post_type() {
+    $args = array(
+                  'description' => 'Promotion Post Type',
+                  'show_ui' => true,
+                  'menu_position' => 4,
+                  'exclude_from_search' => true,
+                  'labels' => array(
+                                    'name'=> 'Promotions',
+                                    'singular_name' => 'Promotions',
+                                    'add_new' => 'Add New Promotion',
+                                    'add_new_item' => 'Add New Promotion',
+                                    'edit' => 'Edit Promotions',
+                                    'edit_item' => 'Edit Promotion',
+                                    'new-item' => 'New Promotion',
+                                    'view' => 'View Promotions',
+                                    'view_item' => 'View Promotion',
+                                    'search_items' => 'Search Promotions',
+                                    'not_found' => 'No Promotions Found',
+                                    'not_found_in_trash' => 'No Promotions Found in Trash',
+                                    'parent' => 'Parent Promotion'
+                                   ),
+                 'public' => true,
+                 'capability_type' => 'post',
+                 'hierarchical' => false,
+                 'rewrite' => true,
+                 'supports' => array('title', 'editor', 'custom-fields')
+                 );
+    register_post_type( 'promotion' , $args );
+}
+
+
+
+===================================================
+	//This code for query custom
+===================================================
+	
+<?php 
+global $post;
+$args = array( 'posts_per_page' => -1,/*কয়টা পোস্ট থাকবে তা উল্লেখ করতে হবে unlimited হইলে -1 হবে  */ 'post_type'=> 'post',/*custom-post এর register_post_type এর ID*/'your_cat' => category_name /* যদি category থাকে, আর না থাকলে এই অংশটুকু লাগবেনা*/);
+$myposts = get_posts( $args );
+foreach( $myposts as $post ) : setup_postdata($post); ?>
+
+// paste Your Post Content. Title, detail etc. 
+
+<?php endforeach; ?>
+-------------- fresh code-----------------------
+<?php
+global $post;
+$args = array( 'posts_per_page' => -1, 'post_type'=> 'post' );
+$myposts = get_posts( $args );
+foreach( $myposts as $post ) : setup_postdata($post); ?>
+				
+	// paste Your Post Content. Title, detail etc. 
+
+<?php endforeach; ?>
+
+
+=================================================
+		 Custom Taxonomy Register
+=================================================
+<?php
+function custom_post_taxonomy() {
+	register_taxonomy(
+		'event_cat',  //The name of the taxonomy. Name should be in slug form (must not contain capital letters or spaces).
+		'event-items',                  //post type name
+		array(
+			'hierarchical'          => true,
+			'label'                         => 'Event Category',  //Display name
+			'query_var'             => true,
+			'show_admin_column'             => true,
+			'rewrite'                       => array(
+				'slug'                  => 'event-category', // This controls the base slug that will display before each term
+				'with_front'    => true // Don't display the category base before
+				)
+			)
+	);
+}
+add_action( 'init', 'custom_post_taxonomy'); 
+?>
+=================================================
+		 Custom Taxonomy Query
+=================================================
+
+<?php
+global $post;
+$args = array( 'posts_per_page' => -1, 'post_type'=> 'staff', 'department_cat' => 'Commerical' );
+$myposts = get_posts( $args );
+foreach( $myposts as $post ) : setup_postdata($post); ?>
+				
+	// Your Post Content. Title, detail etc. 
+	<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+					<?php the_content(); ?>
+				
+<?php endforeach; ?>
+
+// query reset করার জন্য
+<?php wp_reset_query(); ?>		
+
+
+=========================================
+//This code for query increment and decrement post 
+============================================
+<?php
+$the_query = new WP_Query( array( 'posts_per_page' => 4 ) );
+if ( $the_query->have_posts()) : ?>
+<?php $count = 0; ?>
+<?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
+<?php $count++; ?>
+
+  <?php if ($count == 3) : ?>
+    <div class="third_post single-latest">
+        <?php the_title(); ?>
+        <?php the_post_thumbnail('full'); ?>
+    </div>          
+  <?php elseif ($count == 4) : ?> 
+    <div class="fourth_post single-latest">
+        <?php the_title(); ?>
+    </div>          
+   <?php else : ?>
+   	<div class="single_post single-latest">
+          <?php the_title(); ?>
+          <?php the_post_thumbnail('full'); ?>
+          <?php the_excerpt(); ?>
+     </div>
+
+<?php endif; ?>
+<?php endwhile; ?>
+<?php endif; ?>
+
+
+=======================================================
+EXCLUDE CURRENT POST FROM WP QUERY 
+=======================================================
+<?php
+$currentID = get_the_ID();
+$my_query = new WP_Query( array('cat' => '1', 'showposts' => '5', 'post__not_in' => array($currentID)));
+while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
+<h2><?php the_title() ?></h2>
+<?php the_content(); ?>
+<?php endwhile; ?>
+
+you can check this link http://wordpress.stackexchange.com/questions/106154/why-wont-this-wp-query-exclude-certain-pages
+=======================================================
+Exclude pages from admin edit pages list   this code paste in functions.php
+=======================================================
+add_action( 'pre_get_posts' ,'exclude_this_page' );
+function exclude_this_page( $query ) {
+        if( !is_admin() )
+                return $query;
+        global $pagenow;
+        if( 'edit.php' == $pagenow && ( get_query_var('post_type') && 'page' == get_query_var('post_type') ) )
+                $query->set( 'post__not_in', array(23,28,30) ); // page id  which you want to hide
+        return $query;
+}
+
+//Please note this does not stop a post from being editable this snippet only hides the page from view.
+
+
+=======================================================
+		 featured image support এর জন্য নিচের কোডগুলি দরকার
+=======================================================
+	add_theme_support( 'post-thumbnails', array( 'post' ) );
+	//নোটঃ এখানে আপনি যদি page এ ও ফিচার ইমেজ দিতে চান তাহলে 'page' যুক্ত করতে হবে  । যেমনঃ
+	add_theme_support( 'post-thumbnails', array( 'post', 'page'/* এখানে যতগুলি custom post এ register_post_type( 'your-id-name' তৈরি করব ততগুলি id_name দিতে হবে কমা দিয়ে  ডাবল কুটেশন এর ভিতর '',*/ ) );
+
+	//custom post এর suport এ  thumbnail থাকতে হবে 
+	যেমনঃ 'supports' => array( 'post', 'title', 'thumbnail', 'editor' )
+	
+	add_image_size( 'post-image', 450, 150, true );
+	//নোটঃ add_image_size এর id 'post-image' অবশ্যই ড্যাশ - দিয়ে হবে আন্ডারস্কোর _ হবেনা এবং এখানে প্রথমটি width ও পরেরটি height
+
+	set_post_thumbnail_size( 200, 200, true ); //এটা featured box এ image size কি হবে তার জন্য।
+
+==========================================================
+How to create different thumb size for different post type.php
+===========================================================
+
+<?php
+
+add_action( 'pre-upload-ui', 'get_the_post_type' );
+function get_the_post_type() {
+    $post_type = isset( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : 'post';
+    set_transient( 'attached_post_type', $post_type );
+}
+
+add_filter( 'intermediate_image_sizes_advanced', 'add_image_size_for_post_type', 10 );
+function add_image_size_for_post_type( $sizes ) {
+    $post_type = get_transient( 'attached_post_type' );
+    delete_transient( 'attached_post_type' );
+    
+    /*
+     * BLOCK A
+     *
+     * This can be used if you want to set different size for only one post type. For multiple post type, check BLOCK B
+     *
+     */
+    if( $post_type == 'page' ){
+	    $sizes['post-thumbnail'] = array( 'width' => 275, 'height' => 175, 'crop' => true );
+    }
+    // END OF BLOCK A
+    
+    
+    /*
+     * BLOCK B
+     *
+     * This can be used if you want to set different sizes for different post types.
+     *
+     */
+    $post_type_size = array(
+			    'post' => array( 'width' => 275, 'height' => 175, 'crop' => true ),
+			    'page' => array( 'width' => 375, 'height' => 475, 'crop' => true ),
+			    'CPT' => array( 'width' => 475, 'height' => 675, 'crop' => true )
+			    );
+    
+    if( isset( $post_type_size[$post_type] ) ) $sizes['post-thumbnail'] = $post_type_size[$post_type];
+    
+    // END OF BLOCK B
+
+    return $sizes;
+
+}
+----------------------------------------------------------------
+--- or see this link: https://github.com/syamilmj/Aqua-Resizer  ---
+----------------------------------------------------------------
+
+//How call images: এই code your target.php তে  query এর ভিতর paste করতে হবে
+----------------------------------------------------------
+		<?php the_post_thumbnail('slider-image',/* যেই id দিয়ে image crop করা হইছে অর্থাৎ add_image_size( 'slider-image',=এইটা 735, 254, true );*/  array('class' => 'imgthumb')/*যদি img ট্যাগ এর ভিতর class থাকে তাহলে লাগবে না হয় array লাগবে না*/); ?>
+		
+		//অর্থাৎ img ট্যাগ এর ভিতর class না থাকে  তাহলে এইটা হবে 
+		<?php the_post_thumbnail('slider-image'); ?> 
+		
+		//আর  img ট্যাগ এর ভিতর class থাকে  তাহলে এইটা হবে
+		<?php the_post_thumbnail('slider-image',  array('class' => 'imgthumb')); ?>
+-----------------------------------------------------------
+		// শুধু ইমেজের লিঙ্ক : 
+	<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-image' ); echo $image[0]; ?>
+		// this code will use inside src=""   because it comes without <img/>  tag.
+	নোটঃ এটা ব্যবহার করলে শুধু ইমেজের লিংক তাই  <img src="এখানে উপরের কোডটা দিতে হবে" alt=""/>
+
+		// ইমেজ src অটোমেটিক কল: this code will replace <img/> tag because it comes with <img/>  tag.	
+	<?php the_post_thumbnail('post-image', array('class' => 'imgthumb')); ?>
+			=============//or
+	<?php the_post_thumbnail('post-large'); ?>
+
+এখানে array  দিয়ে আলাদা ক্লাস নেওয়া হয়েছে এখানে post-image দিয়ে নির্দিষ্ট সাইজের ইমেজ নেওয়া হচ্ছে যেটাকে ফাংশনে দেওয়া হয়েছিল 
+
+custom post register post_type name + add_theme_support + custom Query post_type =  এই তিন জায়গায় একই  ID ব্যাবহার করতে হইবে featured image রেজিস্টার এর জন্য  
+
+এবং 
+
+add_image_size( 'slides-image', 256, 200, true ); + <img src="<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'slides-image' ); echo $image[0]; ?>" alt="" />  বা <?php the_post_thumbnail('product-preview', array('class' => 'product-preview')); ?> এই দুই জায়গায় একই  ID ব্যাবহার করতে হইবে featured image কল এর জন্য
+
+নোটঃ  default post বা  page এর জন্য আলাদা ID এর প্রয়োজন নাই  শুধু  function এ  add_image_size( 'img-crop-id', 256, 200, true ); এটা লাগবে আর নির্দিষ্ট location এ  <?php the_post_thumbnail('img-crop-id', array('class' => 'your_img_class')); ?>
+
+
+=========================================================
+Post থেকে  প্রথম image কে featured image বানানোর code  বা কোণো image না থাকলে default ভাবে image show করানোর code
+=========================================================
+Functions.php page a past korte hobe.
+
+function catch_that_image() { global $post, $posts; $first_img = ''; ob_start(); ob_end_clean(); $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches); $first_img = $matches [1] [0]; if(empty($first_img)){ $first_img = get_template_directory_uri()."/images/logo.png"; } return $first_img; }
+
+html code
+
+<?php if ( has_post_thumbnail() ) { ?>
+
+ // Your Code
+             
+<?php } else { ?> 
+
+<div class="first-image"> <a href="<?php the_permalink() ?>"><img class="post-thumb" src="<?php echo catch_that_image(); ?>" alt="first image" /></a></div>
+
+
+<?php } ?>
+
+
+
+=================================================================
+from single page post to next or prev single page post link code
+=================================================================
+<?php
+      $next_post_link_url = get_permalink( get_adjacent_post(false,'',false)->ID );
+      $prev_post_link_url = get_permalink( get_adjacent_post(false,'',true)->ID );
+     ?>
+    
+    <div class="p_n">
+     <a href="<?php echo $prev_post_link_url ?>"><i class="fa fa-chevron-left pr"></i></a>
+     <a href="<?php echo $next_post_link_url ?>"><i class="fa fa-chevron-right ne"></i></a>
+    </div>
+	
+=================================================================
+from single page post link to  1 step back prev post page  link code
+=================================================================	
+	
+<?php print $_SERVER['HTTP_REFERER'];?>
+
+===================================================
+				//কন্টেন্ট এর অংশ বিশেষ আনার জন্য।
+===================================================
+/* copy and past in functions.php for excerpt post for excerpt with readmore */
+
+function excerpt($num) {
+$limit = $num+1;
+$excerpt = explode(' ', get_the_excerpt(), $limit);
+array_pop($excerpt);
+$excerpt = implode(" ",$excerpt)." <a href='" .get_permalink($post->ID) ." ' class='".readmore."'>+More</a>";
+echo $excerpt;
+}
+	
+	/* for post excerpt copy and past in target.php*/
+	<?php echo excerpt('22'); ?>
+----------------------------------------------------------------------------
+	/* for post excerpt copy and past in target.php*/
+	<?php the_excerpt(50); ?>
+	
+ /* for post excerpt latest. */
+	<?php $post_content = get_the_content(); echo wp_trim_words($post_content, 15 );?>
+
+//* Remove [...] from WordPress excerpts
+<?php
+ 
+function afn_customize_excerpt_more( $more ) {
+    return ' ';
+}
+add_filter('excerpt_more', 'afn_customize_excerpt_more');
+?>
+====================================================
+// for breadcrumbs this code paste in page.php
+====================================================
+// this code paste in your function.php file
+-------------------------------------------
+<?php 
+function wordpress_breadcrumbs() {
+ 
+  $delimiter = '&raquo;';
+  $name = 'Home'; //text for the 'Home' link
+  $currentBefore = '<span class="current">';
+  $currentAfter = '</span>';
+ 
+  if ( !is_home() && !is_front_page() || is_paged() ) {
+ 
+    echo '<div id="crumbs">';
+ 
+    global $post;
+    $home = get_bloginfo('url');
+    echo '<a href="' . $home . '">' . $name . '</a> ' . $delimiter . ' ';
+ 
+    if ( is_category() ) {
+      global $wp_query;
+      $cat_obj = $wp_query->get_queried_object();
+      $thisCat = $cat_obj->term_id;
+      $thisCat = get_category($thisCat);
+      $parentCat = get_category($thisCat->parent);
+      if ($thisCat->parent != 0) echo(get_category_parents($parentCat, TRUE, ' ' . $delimiter . ' '));
+      echo $currentBefore . 'Archive by category &#39;';
+      single_cat_title();
+      echo '&#39;' . $currentAfter;
+ 
+    } elseif ( is_day() ) {
+      echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $delimiter . ' ';
+      echo '<a href="' . get_month_link(get_the_time('Y'),get_the_time('m')) . '">' . get_the_time('F') . '</a> ' . $delimiter . ' ';
+      echo $currentBefore . get_the_time('d') . $currentAfter;
+ 
+    } elseif ( is_month() ) {
+      echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a> ' . $delimiter . ' ';
+      echo $currentBefore . get_the_time('F') . $currentAfter;
+ 
+    } elseif ( is_year() ) {
+      echo $currentBefore . get_the_time('Y') . $currentAfter;
+ 
+    } elseif ( is_single() ) {
+      $cat = get_the_category(); $cat = $cat[0];
+      echo get_category_parents($cat, TRUE, ' ' . $delimiter . ' ');
+      echo $currentBefore;
+      the_title();
+      echo $currentAfter;
+ 
+    } elseif ( is_page() && !$post->post_parent ) {
+      echo $currentBefore;
+      the_title();
+      echo $currentAfter;
+ 
+    } elseif ( is_page() && $post->post_parent ) {
+      $parent_id  = $post->post_parent;
+      $breadcrumbs = array();
+      while ($parent_id) {
+        $page = get_page($parent_id);
+        $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
+        $parent_id  = $page->post_parent;
+      }
+      $breadcrumbs = array_reverse($breadcrumbs);
+      foreach ($breadcrumbs as $crumb) echo $crumb . ' ' . $delimiter . ' ';
+      echo $currentBefore;
+      the_title();
+      echo $currentAfter;
+ 
+    } elseif ( is_search() ) {
+      echo $currentBefore . 'Search results for &#39;' . get_search_query() . '&#39;' . $currentAfter;
+ 
+    } elseif ( is_tag() ) {
+      echo $currentBefore . 'Posts tagged &#39;';
+      single_tag_title();
+      echo '&#39;' . $currentAfter;
+ 
+    } elseif ( is_author() ) {
+       global $author;
+      $userdata = get_userdata($author);
+      echo $currentBefore . 'Articles posted by ' . $userdata->display_name . $currentAfter;
+ 
+    } elseif ( is_404() ) {
+      echo $currentBefore . 'Error 404' . $currentAfter;
+    }
+ 
+    if ( get_query_var('paged') ) {
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ' (';
+      echo __('Page') . ' ' . get_query_var('paged');
+      if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ')';
+    }
+ 
+    echo '</div>';
+ 
+  }
+}
+ 
+?>
+
+
+// this code paste in your target.php file
+-------------------------------------------
+
+	<div class="breadcrumbs">
+		<?php if (function_exists('wordpress_breadcrumbs')) wordpress_breadcrumbs(); ?>
+	</div>
+
+	//*this code paste in style.css */
+	.breadcrumbs {border-bottom:1px solid #ddd;margin-bottom:15px;padding-bottom:10px}
+
+	
+
+
+==================================================
+	  //Single page তৈরি করতে এই কোডটি call করতে হয়।
+==================================================
+				//For single.php
+--------------------------------------------------
+/*  copy and past in single.php */
+<?php if(have_posts()) : ?><?php while(have_posts())  : the_post(); ?>
+
+	<h2><?php the_title(); ?></h2>
+
+	<?php the_content(); ?>
+
+   <?php comments_template( '', true ); ?>  
+
+<?php endwhile; ?>
+
+<?php else : ?>
+
+	<h3><?php _e('404 Error&#58; Not Found'); ?></h3>
+
+<?php endif; ?>
+
+
+====================================================
+				//search.php
+====================================================
+search করার  জন্য  root ফোল্ডারে search.php নামে একটি পেজ তৈরি করতে হয়।
+----------------------------------------------------
+			<h2 class="latest_frm_cat_title archive_title"><?php printf ( __ (
+			'search Results for : %s', 'brightpage' ), '<span>' .
+			get_search_query() .  '</span>' ); ?> </h2>
+            <?php if (have_posts()) : ?>
+			<?php get_template_part('post-excerpt'); ?>						
+			<?php else : ?>
+			<h3 class="archive_not_found">404 not found </h3>
+			<?php endif; ?>
+
+			-------------------- Or --------------------
+
+<?php if ( have_posts() ) : ?>
+			<h1 class="search-page-title"><?php printf( __( 'Search Results for: %s' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+			<?php
+			 get_template_part( 'post-loop', 'search' );
+			?>
+<?php else : ?>
+				<div id="post-0" class="post no-results not-found">
+					<h2 class="entry-title"><?php echo __( 'Nothing Found' ); ?></h2>
+					<div class="entry-content">
+						<p><?php echo __( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.' ); ?></p>
+						
+					<a id="submit" href="<?php bloginfo( 'home' ); ?>">Home</a>
+					</div><!-- .entry-content -->
+				</div><!-- #post-0 -->
+<?php endif; ?>
+
+
+                HEADER a use korte hobe inputgolor jagay
+-----------------------------------------------------------------
+
+<form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">		
+	<div class="search floatright fix">
+		<input type="text" name="s" id="s" placeholder="Looking For Somthing" />
+		<input type="submit" value="GO"/>
+	</div>
+</form>
+
+
+=================================================
+				//archive.php
+=================================================
+Archive করে রাখার জন্য এই কোড দিয়ে root ফোল্ডারে archive.php নামে একটি পেজ তৈরি করতে হয়।
+-------------------------------------------------
+	<h1 class="archivetitle">
+
+		<?php if (have_posts()) : ?>
+
+			<?php $post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
+
+				<?php /* If this is a category archive */ if (is_category()) { ?>
+
+					<?php _e('Archive for the'); ?> '<?php echo single_cat_title(); ?>' <?php _e('Category'); ?>                                    
+
+				<?php /* If this is a tag archive */  } elseif( is_tag() ) { ?>
+
+					<?php _e('Archive for the'); ?> <?php single_tag_title(); ?> Tag
+
+				<?php /* If this is a daily archive */ } elseif (is_day()) { ?>
+
+					<?php _e('Archive for'); ?> <?php the_time('F jS, Y'); ?>                                        
+
+				<?php /* If this is a monthly archive */ } elseif (is_month()) { ?>
+
+					<?php _e('Archive for'); ?> <?php the_time('F, Y'); ?>                                    
+
+				<?php /* If this is a yearly archive */ } elseif (is_year()) { ?>
+
+					<?php _e('Archive for'); ?> <?php the_time('Y'); ?>                                        
+
+				<?php /* If this is a search */ } elseif (is_search()) { ?>
+
+					<?php _e('Search Results'); ?>                            
+
+				<?php /* If this is an author archive */ } elseif (is_author()) { ?>
+
+					<?php _e('Author Archive'); ?>                                        
+
+				<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
+
+					<?php _e('Blog Archives'); ?>                                        
+
+		<?php } ?>
+
+	</h1>
+
+	<div class="your_div_class">
+		<?php get_template_part('post-excerpt'); ?>
+	</div>
+	<?php else : ?>
+	<div class="your_div_class floatleft">
+		<h3><?php _e('404 Error&#58; Not Found'); ?></h3>
+	</div>
+
+	<?php endif; ?>
+	
+
+<?php==================================================
+			নাম্বার সহ পেজিনেশন আনার জন্য এই কোড।
+==================================================
+			//For Numbering Pagination
+--------------------------------------------------
+/* copy and past in functions.php for numbering pagination */
+
+function pagination($pages = '', $range = 4)
+    {  
+         $showitems = ($range * 2)+1;  
+
+         global $paged;
+         if(empty($paged)) $paged = 1;
+
+         if($pages == '')
+         {
+             global $wp_query;
+             $pages = $wp_query->max_num_pages;
+             if(!$pages)
+             {
+                 $pages = 1;
+             }
+         }   
+
+         if(1 != $pages)
+         {
+             echo "<div class=\"pagination\"><span>Page ".$paged." of ".$pages."</span>";
+             if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<a href='".get_pagenum_link(1)."'>&laquo; First</a>";
+             if($paged > 1 && $showitems < $pages) echo "<a href='".get_pagenum_link($paged - 1)."'>&lsaquo; Previous</a>";
+
+             for ($i=1; $i <= $pages; $i++)
+             {
+                 if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+                 {
+                     echo ($paged == $i)? "<span class=\"current\">".$i."</span>":"<a href='".get_pagenum_link($i)."' class=\"inactive\">".$i."</a>";
+                 }
+             }
+
+             if ($paged < $pages && $showitems < $pages) echo "<a href=\"".get_pagenum_link($paged + 1)."\">Next &rsaquo;</a>";  
+             if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($pages)."'>Last &raquo;</a>";
+             echo "</div>\n";
+         }
+    } 
+	
+	
+/* Use this code and post in loop.php */
+
+	<?php if (function_exists("pagination")) {
+        pagination($additional_loop->max_num_pages);
+    } 
+	?>
+
+	
+/* Copy and past in style.css for numbering pagination styling */
+
+.pagination{clear:both;font-size:11px;line-height:13px;}
+.pagination span, .pagination a{display:block;float:left;margin:2px 2px 2px 0;padding:6px 9px 5px 9px;text-decoration:none;width:auto;color:#fff;background:#555;}
+.pagination a:hover{color:#fff;background:#3279BB;}
+.pagination .current{padding:6px 9px 5px 9px;background:#3279BB;color:#fff;} 
+
+
+
+পেজিনেশন আনার জন্য এই কোড।
+==================================================
+					//For Pagination 
+==================================================
+/* copy and past in loop.php for pagination */
+
+<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts') ); ?></div>
+<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>') ); ?></div>
+
+/* Copy and past in style.css for pagination styling */
+.nav-previous {float:left;width:49%;margin-right:1%;text-align:left;margin-bottom:25px}
+.nav-next {float:right;width:49%;margin-left:1%;text-align:right}
+
+
+
+
+=========================================================
+			// shortcode এর জন্য code
+=========================================================
+
+// without attribute
+---------------------------------------------------------
+function vimeo_shortcode( $atts, $content = null  ) {
+	return '<iframe src="//player.vimeo.com/video/'.$content.'" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+}	
+add_shortcode('vimeo', 'vimeo_shortcode');
+
+// with attribute
+---------------------------------------------------------
+
+function vimeo_video_shortcode( $atts, $content = null ) {
+	$a = shortcode_atts( array(
+		'id' => '74715441'
+	), $atts );
+	
+	return'<div class="res_video"><iframe src="http://player.vimeo.com/video/' . esc_attr($a['id']) . '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>';
+}
+add_shortcode('vimeo', 'vimeo_video_shortcode');
+
+//widget এর text এ shoortcode support করানোর জন্য functions.php তে এই code টি কল করতে হবে
+--------------------------------------------------------
+add_filter('widget_text', 'do_shortcode');
+//widget এর text এ PHP code support করানোর জন্য functions.php তে এই code টি কল করতে হবে
+--------------------------------------------------------
+add_filter('widget_text','execute_php',100);
+function execute_php($html){
+     if(strpos($html,"<"."?php")!==false){
+          ob_start();
+          eval("?".">".$html);
+          $html=ob_get_contents();
+          ob_end_clean();
+     }
+     return $html;
+}
+
+// do-shortcode এর জন্য code টি দিয়ে আপনার নির্দিষ্ট স্থানে paste করুন
+--------------------------------------------------------
+<?php echo do_shortcode('[your_desired_shortcode]'); ?>
+
+		//custom_post in shortcode এর shortcode
+--------------------------------------------------------
+function category_post_shortcode($atts){
+	extract( shortcode_atts( array(
+		'title' => '',
+		'link' => '',
+		'category' => '',
+	), $atts, 'category_post' ) );
+	
+    $q = new WP_Query(
+        array( 'category' => $category, 'posts_per_page' => '3', 'post_type' => 'post')
+        );
+$list = '<div class="latest_from_category"><h2 class="latest_frm_cat_title">'.$title.'</h2> <a href="'.$link.'" class="latest_more_link">more</a>';
+
+while($q->have_posts()) : $q->the_post();
+    //get the ID of your post in the loop
+    $id = get_the_ID();
+
+    $post_excerpt = get_post_meta($id, 'post_excerpt', true);  
+	$post_thumbnail= get_the_post_thumbnail( $post->ID, 'post-thumbnail' );        
+    $list .= '
+	
+						<div class="single_cate_post floatleft">
+							'.$post_thumbnail.'
+							<h3>'.get_the_title().'</h3> 
+							<p>'.$post_excerpt.'</p>
+							<a href="'.get_permalink().'" class="readmore">Read More</a>
+						</div>		
+	';        
+endwhile;
+$list.= '</div>';
+wp_reset_query();
+return $list;
+}
+add_shortcode('category_post', 'category_post_shortcode');	
+
+//custom_post shortcode এর list এ  html code এর ভিতর <?php the_title?>এবং <?php the_content?> পরিবর্তে হবে --------------------------------------------------------
+'.get_the_title().' or ' .do_shortcode( get_the_title() ). '
+'.get_the_content().'  
+'.get_the_permalink().'
+' .get_the_excerpt(). '
+'.get_the_date().' 
+'.get_the_author().'
+'. get_site_url() .'
+
+//for featured image
+$featured_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'case-study-image' );
+<img src="'.$featured_image_url[0].'" alt="" />
+
+//for Template directory uri
+$theme_dir = get_bloginfo('template_directory');
+<img src="'.$theme_dir.'/img/link_style.png" alt="" />
+
+
+========================================================
+				//For 404 page
+========================================================
+<!-- copy and past in 404.php -->
+<div class="not_found">
+	<h1>404 not found!</h1>
+	<p>Sorry, but the page you are trying to reach is unavailable or does not exist.</p>
+	<a id="submit" href="<?php bloginfo( 'home' ); ?>">Home</a>
+</div>
+
+
+========================================================
+				//Reply Comment Scripts
+========================================================
+
+<!-- copy and past in functions.php -->
+function comment_scripts(){
+
+   if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
+
+}
+
+add_action( 'wp_enqueue_scripts', 'comment_scripts' );
+
+
+<!-- copy and past in comments.css From E/All source/comments.css -->
+
+
+for
+
+
+==================================================
+				Wordpress এ  SMOF
+==================================================				
+				SMOF এর section array
+--------------------------------------------------
+$of_options[] = array( 	"name" 		=> "General Settings",
+						"type" 		=> "heading"
+				);
+
+			   Wordpress এ SMOF এর array 
+--------------------------------------------------
+$of_options[] = array( 	"name" 		=> "Phone number",
+						"desc" 		=> "your phone number here",
+						"id" 		=> "phone_number",
+						// Use the shortcodes [site_url] or [site_url_secure] for setting default URLs
+						"std" 		=> "0535 954 74 54",
+						"type" 		=> "text"
+				);
+
+SMOF এর option active code এটা target.php তে নির্দিষ্ট স্থানে paste হবে
+--------------------------------------------------
+<?php echo do_shortcode(stripslashes($data['phone_number'])); ?>	
+
+
+
+			
+==========================================================
+					//Option Tree
+==========================================================
+প্রথমে wordpress.org থেকে option tree download করুন 
+Download Option Tree: http://wordpress.org/extend/plugins/option-tree/
+ডাউনলোড করার পর আপনার থিমে option-tree folder টি রেখে দিবেন
+option-tree folderএর মধ্যে থাকা ot-loader.php টি function এ include করতে হবে
+function এ  গিয়ে প্রথমে 
+
+//Activate Option Tree just copy & paste this code in functions.php
+
+//add_filter( 'ot_show_pages', '__return_false' ); কাজ শেষে এই লাইনটির কমেন্ট উঠিয়ে দিতে হবে 
+add_filter( 'ot_show_new_layout', '__return_false' );
+add_filter( 'ot_theme_mode', '__return_true' );
+include_once( 'option-tree/ot-loader.php' );
+include_once( 'inc/theme-options.php' );
+include_once( 'inc/meta-boxes.php' );
+
+Meta-box build-up করার জন্য প্রথমে assets > theme-mode > demo-meta-boxes.php ফাইলটি কপি করুন তারপর আপনার থিমের মধ্যে একটা ফোল্ডার করবেন নাম দিবেন inc এবার এই folder এর ভিতর ফাইলটি pasteকরুন এবার ফাইলটির নাম পরিবর্তন করে শুধু meta-boxes.php নাম দিন। এবার functons.php তে গিয়ে ফাইলটি চিনিয়ে দিবেন include_once('inc/meta-boxes.php'); এই লাইনটি লিখে দিবেন। এবার  meta-boxes.php ফাইলটি ওপেন করুন
+
+function custom_meta_boxes() {
+  
+  /*
+   * Create a custom meta boxes array that we pass to 
+   * the OptionTree Meta Box API Class.
+   */
+  $my_meta_box/*আপনার meta_box যেকোনো নাম */ = array(
+    'id'          => 'demo_meta_box',/* আপনার meta_box নাম এবং id একই হইতে পারে */
+    'title'       => __( 'Demo Meta Box', 'theme-text-domain' ),/* আপনার meta_box এর titl */
+    'desc'        => '',/* আপনার meta_box এর দিকনির্দেশনা */
+    'pages'       => array( 'post' ),/* আপনার post-type এর নাম */
+    'context'     => 'normal',
+    'priority'    => 'high',
+    'fields'      => array(
+      array(
+        'label'       => __( 'Conditions', 'theme-text-domain' ),/* আপনার meta_box এর option এর label বা নাম  */
+        'id'          => 'demo_conditions', /* আপনার custom-field id নাম */
+        'desc'          => '', /* আপনার meta_box এর option এর দিকনির্দেশনা */
+        'type'        => 'tab',/* আপনার meta_box এর option এর type */
+		'std'         => 'off',/* আপনার meta_box এর option এর default data যেটা দেখতে চান */
+		'operator'    => 'and',
+        'condition'   => 'demo_show_gallery:is(on),demo_gallery:not()'
+      ),
+      
+    )
+  );
+  
+  /**
+   * Register our meta boxes using the 
+   * ot_register_meta_box() function.
+   */
+  if ( function_exists( 'ot_register_meta_box' ) )
+    ot_register_meta_box( $my_meta_box );/* সবশেষে আপনার meta_box নাম দিয়ে শেষ করতে হবে*/
+
+}
+
+this code is for specific page metabox
+--------------------------------------------
+$price_page_meta_box = array(
+    'id'          => 'price_page_meta_box',
+    'title'       => 'Pricing Page Table Information',
+    'desc'        => '',
+    'pages'       => array( 'page' ),
+    'context'     => 'normal',
+    'priority'    => 'high',
+    'fields'      => array(
+      array(
+        'label'       => 'Pricing Page Table Head',
+        'id'          => 'pric_table_head',
+        'std'          => '',
+        'type'        => 'textarea'
+      ),
+    )
+  );
+  
+  $post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'];
+$template_file = get_post_meta($post_id, '_wp_page_template', TRUE);
+
+if ($template_file == 'price-newmeta.php') {
+    ot_register_meta_box( $price_page_meta_box );
+}
+
+
+এবার dashboard গিয়ে দেখবেন custom-field এর স্থলে আলাদাভাবে  meta-boxes চলে এসেছে
+
+option tree থেকে শুধুমাত্র  metabox use করতে নিচের code লেখুন functions.php
+add_filter( 'ot_show_pages', '__return_false' );
+add_filter( 'ot_use_theme_options', '__return_false' );
+
+
+option build-up করার জন্য প্রথমে assets > theme-mode > demo-theme-options.php ফাইলটি কপি করুন তারপর আপনার থিমের মধ্যে একটা ফোল্ডার করবেন নাম দিবেন inc এবার এই folder এর ভিতর ফাইলটি pasteকরুন এবার ফাইলটির নাম পরিবর্তন করে শুধু theme-options.php নাম দিন। এবার functons.php তে গিয়ে ফাইলটি চিনিয়ে দিবেন include_once(meta'inc/theme-options.php'); এই লাইনটি লিখে দিবেন। এবার dashboard > appearance গিয়ে দেখবেন theme option চলে এসেছে
+
+এবার theme-options.php ফাইলটির ভিতরের যেই sections এবং settings গুলি দরকার নেই সেইগুলি কেটে দিব।   settings এর ভিতর যতগুলি array নিবেন ততগুলি option তৈরি হবে  প্রত্যেকটি sections এর under এ।sections গুলু আপনার ইচ্ছামত যেইকয়টা লাগবে সেই কয়টা নিতে পারবেন এবং নাম দিতে পারবেন। এ। sections এর array তেtitle & id নিলেই হবে আর কিছু লাগবেনা
+
+		//Create Option Tree In the theme-options.php
+-----------------------------------------------------------
+
+	<?php
+		add_action( 'admin_init', 'custom_theme_options', 1 );
+		function custom_theme_options() {
+			$saved_settings = get_option( 'option_tree_settings', array() );
+			$custom_settings = array(
+				'sections' => array(
+				array(
+				'id' => 'general',
+				'title' => 'Site Settings'
+				)
+				),
+				'settings' => array(
+				array(
+				'id' => 'logo_text',
+				'label' => 'Logo Text',
+				'desc' => 'Use H1, H2, H3 tag',
+				'type' => 'textarea',
+				'section' => 'general'
+				),
+				array(
+				'id' => 'footer_text',
+				'label' => 'Footer Text',
+				'type' => 'textarea',
+				'section' => 'general'
+				)
+				)
+				);
+				if ( $saved_settings !== $custom_settings ) {
+				update_option( 'option_tree_settings', $custom_settings );
+				}
+		}
+	?>
+
+		//Get Data From Option Tree
+------------------------------------------------------
+		//Condtional Data
+<?php if ( function_exists( 'get_option_tree') ) : if( get_option_tree( 'your_tree_id') ) : ?>
+<?php get_option_tree( 'your_tree_id', '', true ); ?>
+<?php else : ?>
+Your Default Data here
+<?php endif; endif; ?> 
+
+---------or----------------
+<?php
+$facebook = get_option_tree('facebook-link', '', false); 
+?>
+<?php echo $facebook; ?>
+
+---------or----------------
+<?php get_option_tree( 'logo_link1', '', true ); ?>
+
+		//Get Data From Option Tree Metabox
+------------------------------------------------------
+<?php 
+$case_sub = get_post_meta($post->ID, 'case_sub', true);
+?>
+<?php echo $case_sub; ?>
+
+---------or----------------
+<?php echo get_post_meta($post->ID, 'case_sub', true); ?>
+	
+// this code for css style dynamic by theme option and metabox
+	
+<style type="text/css">
+	.logo {background: url(<?php get_option_tree( 'logo', '', 'true' ); ?>) no-repeat center center;}
+	.prcbanner_content h1{color:<?php echo get_post_meta($post->ID, 'picker', true); ?>}
+</style>
+
+/*for option tree  meta box short code support */
+<?php 
+$mixitup = get_post_meta($post->ID, 'mixitup', true);
+?>
+
+<?php echo do_shortcode($mixitup); ?>
+
+======================================================
+ How to get cropped / resized images through option tree meta box
+ metabox image resize code
+======================================================
+
+// register your gallery type meta box and use the following code to display images.
+<?php
+	if ( function_exists( 'ot_get_option' ) ) {
+	   $images = explode( ',', get_post_meta( get_the_ID(), 'field-id', true ) );
+	  if ( !empty( $images ) ) {
+		foreach( $images as $id ) {
+		  if ( !empty( $id ) ) {
+			$full_img_src = wp_get_attachment_image_src( $id, 'your-image-size' );
+			$thumb_img_src = wp_get_attachment_image_src( $id,'your-image-size' );
+			echo '<div data-thumb="'. $thumb_img_src[0].'" data-src="'.$full_img_src[0].'"></div>';
+		  }
+		}
+	  }
+	}
+?>
+In line no 4 the field-id is your meta box id.You can define as much as image sizes you want with your-image-size which you can see in the line no 08 & 09 . The your-image-size is your image id which you created by add_image_size() function in the functions.php .Thank You!
+
+//option tree image resize code
+
+$slides = ot_get_option( 'my_slider', array() );
+if ( ! empty( $slides ) ) {
+    foreach( $slides as $slide ) {
+        $id = custom_get_attachment_id( $slide['image'] );
+        $src = wp_get_attachment_image_src( $id, 'you-image-size' );
+        echo 'HTML HERE';
+    }
+}
+
+=======================================================
+metabox category-select type query code 
+=======================================================
+<?php
+$cat = ot_get_option( 'your_id', '', false, true, 0 );
+$args = array( 'numberposts' =>1, 'category'=> $cat);
+$postslist = get_posts( $args );
+foreach ($postslist as $post) :  setup_postdata($post);
+?>
+
+<?php the_title(); ?>
+<?php the_content(); ?>
+
+<?php endforeach; ?>
+
+=======================================================
+metabox slide type query code fpr owl slider
+=======================================================
+
+//this code paste in metabox.php file
+array(
+    'id'          => 'spyr_demo_slider',
+    'label'       => __( 'Slider', 'text-domain' ),
+    'desc'        => __( 'Your description', 'text-domain' ),
+    'type'        => 'slider',
+)
+
+//this code paste in template.php file
+<?php 
+$spyr_demo_slider = get_post_meta( $post->ID, 'spyr_demo_slider', true );
+ 
+// Loop through the array to build your Slider.
+// Note that every slider is different
+// We have access to the following array keys
+// title, description, image and link
+echo '<div id="owl-demo" class="owl-theme">';
+foreach( $spyr_demo_slider as $slide ) {
+    echo '<div class="item"><img src="'. $slide['image'] .'" width="100%" height="auto"
+          alt="'. $slide['description'] .'" title="'. $slide['title'] .'" /></div>';
+}
+echo '</div>';
+
+?>
+
+=======================================================
+metabox list type query code 
+=======================================================
+<?php
+
+$list_item = ot_get_option( 'id', array() );
+
+if ( !empty( $list_item ) ) {
+
+echo '<div>';
+
+foreach( $list_item as $name ) {
+
+echo '<div>'.$name['title'].'</div>
+
+';
+
+}
+
+echo '</div>';
+
+}
+
+?>
+
+------------------------------------------------------	
+		//Simple Data
+<?php get_option_tree( 'facebook', '', true ); ?>
+
+নিচের কোডগুলু দিয়েও করা যায় । অনেকগুলু option দরকার হইলে আমরা variable নিয়ে করব যাতে করে আমরা echo করে নিয়ে নিতে পারি । আমরা যখন condition ব্যাবহার করবো তখন variable নেওয়া লাগে। 
+<?php $your_variable = get_option_tree( 'your_tree_id', '', false ); ?>
+<?php echo $your_variable; ?> এই কোডটি যেখানে দরকার সেখানে paste করব 
+-------------------------------------------------------------
+প্রথমে variable নিতে হবে নোটঃ একাধিক option দরকার হইলে একাধিক variable নিবেন  <?php এখানে হবে ?>
+যেমনঃ
+<?php $your_variable = get_option_tree( 'your_tree_id', '', false )
+	  $your_variable = get_option_tree( 'your_tree_id', '', false ); 
+?>
+তারপর নিচে নিচে condition হবে প্রত্যেকটার জন্য আলাদা আলাদা করে condition নিবেন 
+যেমনঃ
+<?php if(your_variable) : ?>
+	<?php echo $your_variable; ?>
+<?php else : ?>
+	your fallback data
+<?php endif; ?>
+
+<?php if(your_variable) : ?>
+	<?php echo $your_variable; ?>
+<?php else : ?>
+	your fallback data
+<?php endif; ?>
+
+// slider না দেখতে চাইলে নিচের কোডগুলি দিয়ে করতে পারেন
+<?php 
+$slider_appearance = get_option_tree( 'slider_appearance', '', false );
+?>
+
+<?php if($slider_appearance = 'no') : ?>
+<?php /* No Data */?>
+<?php if($slider_appearance = 'yes') : ?>
+<?php get_template_part('slider'); ?>
+<?php endif; endif; ?>
+
+============================================================
+// REMOVE BAD P and BR TAGS FROM NAME ANCHORS
+============================================================
+add_filter('the_content', 'remove_bad_pbr_tags');
+function remove_bad_pbr_tags($content) {
+        $pattern = '/<p><a name=[\"\'](.*)[\"\']><br\s*\/>\s*<h([1-9])>(.*)<\/h([1-9])>\s*<p><\/a><br\s*\/>/';
+        $replacement = "<a name=\"$1\"><h$2>$3</h$4></a>\n<p>";
+	$content = preg_replace($pattern, $replacement, $content);
+	return $content;
+}
+-------------------------------------------------------------
+						or
+-------------------------------------------------------------
+// REMOVE BAD P and BR TAGS FROM NAME ANCHORS
+remove_filter( 'the_content', 'wpautop' );
+remove_filter( 'the_excerpt', 'wpautop' );
+
+function wpse_wpautop_nobr( $content ) {
+    return wpautop( $content, false );
+}
+
+add_filter( 'the_content', 'wpse_wpautop_nobr' );
+add_filter( 'the_excerpt', 'wpse_wpautop_nobr' );
+
+=============================================================
+In qTranslate Change logo/image based on language selected
+=============================================================
+<img src="<?php if ( qtrans_getLanguage() == "en" ){ echo 'your en IMG path';} else if ( qtrans_getLanguage() == "ar" ){echo 'your arIMG path';}" />
+
+--------------or------------------
+
+<div class="home-link">
+	<a href="<?php qtrans_convertURL( bloginfo('url') ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+	<img src="<?php echo get_template_directory_uri(); ?>
+	<?php if ( qtrans_getLanguage() == "pt" ){
+		echo '/images/logo-dpa-284.png' ?>
+	<?php } else if ( qtrans_getLanguage() == "en" ){
+		echo '/images/logo-oh.png' ?><?php } ?> " width="284" height="48" alt="logo homepage">
+	</a>
+</div>
+
+---------------or---------------------
+<?php  
+	if ( qtrans_getLanguage() == 'en' ) {
+	  //put your code in here
+	}
+	elseif ( qtrans_getLanguage() == 'de' ) {
+	  //put your code in here
+	}
+?>
+
+
+=============================================================
+					//Post View Count
+=============================================================
+		//আপনার functions.php তে এই কোডটি যুক্ত করুন 
+-------------------------------------------------------------
+			// function to display number of posts.
+getPostViews($postID){ $count_key = 'post_views_count'; $count = get_post_meta($postID,
+$count_key, true); if($count==''){ delete_post_meta($postID, $count_key);
+add_post_meta($postID, $count_key, '0'); return "0 View"; } return $count.' Times';}
+
+			// function to count views.
+function setPostViews($postID) { $count_key = 'post_views_count';
+$count = get_post_meta($postID, $count_key, true); if($count==''){ $count = 0;
+delete_post_meta($postID, $count_key); add_post_meta($postID, $count_key, '0'); }else{
+$count++; update_post_meta($postID, $count_key, $count); }}
+
+আপনি যেখানে পোস্ট ভিউ কাউন্ট সেট করতে চান সেখানকার  লুপে এই কোডের পরে এই কোডটি যুক্ত করুন আপনি যেখানে পোস্ট ভিউ কাউন্ট দেখাতে চান
+
+
+=============================================================
+			//Post View timer Count
+=============================================================
+<?php echo human_time_diff( get_the_time('U'), current_time('timestamp') ) . ' ago'; ?>
+
+=============================================================
+					//Bangla date view
+=============================================================
+		//আপনার functions.php তে এই কোডটি যুক্ত করুন 
+-------------------------------------------------------------
+function bn($mhm)
+{
+	$eng = array('January','February','March','April','May','June','July','August','September','October','November','December',
+				 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec',
+				 'Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',
+				 'Sat','Sun','Mon','Tue','Wed','Thu','Fri',
+				 '1','2','3','4','5','6','7','8','9','0',
+				 'am','pm','st','nd','rd','th');
+	$bng = array('জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর',
+				 'জানু','ফেব্রু','মার্চ','এপ্রি','মে','জুন','জুলা','আগ','সেপ্টে','অক্টো','নভে','ডিসে',
+				 'শনিবার','রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার',
+				 'শনি','রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র',
+				 '১','২','৩','৪','৫','৬','৭','৮','৯','০',
+				 'পূর্বাহ্ণ','অপরাহ্ণ','&#173;','&#173;','&#173;','&#173;');
+	$con = str_replace($eng, $bng, $mhm);
+	return $con;
+}
+add_action('wp_head', function() {
+echo '<meta name="mhm" content="bdat 1.3" />';});
+add_filter('the_date', 'bn');
+add_filter('the_time', 'bn');
+add_filter('the_views', 'bn');
+add_filter('comments_number', 'bn');
+add_filter('get_comment_date', 'bn');
+add_filter('get_comment_time', 'bn');
+
+============================================================
+How to add custom header and custom background in wordpress theme
+============================================================
+
+		//Title: custom background.
+------------------------------------------------------------
+		head.php
+..............
+replace the
+tag using bellow the code.
+>
+
+functions.php
+.........................
+this code put within the tag
+
+$defaults = array(
+'default-color' => '#000',
+'default-image' => '',
+'wp-head-callback' => '_custom_background_cb',
+'admin-head-callback' => '',
+'admin-preview-callback' => ''
+);
+add_theme_support( 'custom-background', $defaults );
+
+
+Title: custom Header/Logo
+---------------------------------------------
+
+head.php
+..........................
+Put this code where you want to upload your logo.
+----------------------------------------------
+
+functions.php
+..........................
+this code put within the tag
+
+$defaults = array(
+'default-image' => '',
+'random-default' => true,
+'width' => 1000,
+'height' => 200,
+'flex-height' => true,
+'flex-width' => true,
+'default-text-color' => '#000',
+'header-text' => true,
+'uploads' => true,
+'wp-head-callback' => '',
+'admin-head-callback' => '',
+'admin-preview-callback' => '',
+);
+add_theme_support( 'custom-header', $defaults );
+
+===============================================
+JQuery Basic code
+===============================================
+$(document).ready(function(){
+	$('#nav').slicknav();
+	
+	
+  $(".slider_area").click(function(){
+    $(".header_area").addClass("main_header");
+  });
+	
+	
+  $(".cross_button").click(function(){
+    $(".fixed_advert").hide(50000);
+  });
+	
+	$(".testimonials-title h3").click(function(){
+    $(this).animate({fontSize:"50px"});
+  });
+  
+	jQuery(".tab-pane:first-child").addClass("active");
+	jQuery(".nav-tabs li:first-child").addClass("active");
+			  		  
+
+	
+});
+
+===============================================
+social share code for wordpress
+===============================================
+
+-------------------------------------
+<div class="social">
+		<p>সবার সাথে শেয়ার করুন:</p> 
+		<!--Twitter-->
+		<a class="twitter" href="http://twitter.com/home?status=<?php the_title(); ?>: <?php the_permalink(); ?>" target="_blank"><i class="fa fa-twitter"></i> </a>
+		<!--Facebook-->
+		<a class="facebook" href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share this post on Facebook!" onclick="window.open(this.href); return false;"><i class="fa fa-facebook"></i> </a>
+		<!--Google Plus-->
+		<a class="google-plus" target="_blank" href="https://plus.google.com/share?url=<?php the_permalink(); ?>"><i class="fa fa-google-plus"></i> </a>
+		<a class="reddit" href="http://www.reddit.com/submit?url=<?php the_permalink(); ?>&amp;title=<?php the_title(); ?>" title="Reddit" rel="nofollow" target="_blank"><i class="fa fa-reddit"></i> </a>
+		<a class="stumbleupon" href="http://www.stumbleupon.com/submit?url=<?php the_permalink(); ?>&amp;title=<?php the_title(); ?>" title="Stumble it" rel="nofollow" target="_blank"><i class="fa fa-stumbleupon"></i> </a>
+		<!--Digg-->
+		<a class="digg" href="http://digg.com/submit?url=<?php the_permalink(); ?>&amp;title=<?php the_title(); ?>" title="Digg this!" rel="nofollow" target="_blank"><i class="fa fa-digg"></i></a>
+		<!--Linkedin-->
+		<a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php the_title(); ?>&amp;url=<?php the_permalink(); ?>" title="Share on LinkedIn" rel="external nofollow" rel="nofollow" target="_blank"><i class="fa fa-linkedin"></i></a>
+		<!--Pinterest-->
+		<a class="pinterest" href="http://pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); echo $url; ?>" title="Pinterest" rel="nofollow" target="_blank"><i class="fa fa-pinterest"></i></a>
+		<!--Del.icio.us-->
+		<a class="delicious" href="http://del.icio.us/post?url=<?php the_permalink(); ?>&amp;title=<?php the_title(); ?>" title="Bookmark on del.icio.us" rel="nofollow" target="_blank"><i class="fa fa-delicious"></i></a>
+</div>
+
+
+
+ ফেসুবকের বিভিন্ন লাইক বাটন যোগ করতে এখানে দেখতে পারেন
+ ---------------------------------------------
+ https://developers.facebook.com/docs/plugins/like-button/
+============================================
+ /*Add Submenu in sidebar on wordpress*/
+=============================================
+/*Firstly, in your theme's functions.php, you need to write a function to register the names of your menus.*/
+
+  function register_my_menus() {
+  register_nav_menus(
+    array( 'sidebar-menu' => __( 'Sidebar Menu' ) )
+  );
+}
+add_action( 'init', 'register_my_menus' );
+
+/*Display Menus on Theme
+
+Once you've done that, your theme will be almost ready. The last preparation step is to tell the theme where you want the menus to show up.*/
+
+<?php wp_nav_menu( array( 'theme_location' => 'sidebar-menu' ) ); ?>
+
+/*That's all the background work. To finish, you would simply visit the Appearance -> Menus panel in your site admin.
+
+Please read the wordpress codex site.. it has plenty of information on how to do this..*/
+
+
+==============================================
+How to Remove WordPress Admin Bar for All Users Except Admin
+==============================================
+add_action('after_setup_theme', 'remove_admin_bar');
+
+function remove_admin_bar() {
+
+if (!current_user_can('administrator') && !is_admin()) {
+
+show_admin_bar(false);
+
+}
+
+}
+------------------------
+If you want to disable it for all users, then simply paste this blew code in your theme’s functions.php file
+----------------------------------------------
+show_admin_bar(false);
+
+==============================================
+আপনার ওয়ার্ডপ্রেস ড্যাশবোর্ডর ‘Howdy’ লেখাকে পরিবর্তন করে দিন ইচ্ছা মতো যেকোনো কিছু।
+==============================================
+add_filter('gettext', 'change_howdy', 10, 3);
+function change_howdy($translated, $text, $domain) {
+
+if (false !== strpos($translated, 'Howdy'))
+return str_replace('Howdy', 'স্বাগতম', $translated);
+
+return $translated;
+}
+
+এখানে আপনি ‘স্বাগতম’ এর জাইগায় আপনার পছন্দ মতো যেকোনো শব্দ দিতে পারেন। আজ তবে এখানে।ভাল থাকবেন।
+
+==============================================
+এখন থেকে কেউ লগ আউট করলে সরাসরি তাকে নিয়ে যাবে হোম পেজে
+============================================== 
+add_action('wp_logout','go_home');
+function go_home(){
+wp_redirect( home_url() );
+exit();
+}
+
+==============================================
+নিয়ে নিন সুন্দর একটা বাংলা লগিন/রেজিস্টার প্যানেল
+============================================== 
+খুবই সহজ সুধু নিছের কোড কপি করে আপনার সাইট এর sidebar এর text widget এ past করে সেভ করুন ব্যাস কাজ শেষ।
+
+<?php global $user_ID, $user_identity, $user_level ?>
+<?php if ( $user_ID ) : ?>
+<h2> স্বাগতম/Welcome <strong><?php echo $user_identity ?></strong></h2>
+<li><a href="<?php bloginfo('url') ?>/wp-admin/">ড্যাশবোর্ডে/Dashboard</a></li>
+<?php if ( $user_level >= 1 ) : ?>
+<li><a href="<?php bloginfo(‘url’) ?>/wp-admin/post-new.php">নতুন পোষ্ট লিখুন।/New Post</a></li>
+<?php endif // $user_level >= 1 ?>
+<li><a href="<?php bloginfo('url') ?>/wp-admin/profile.php">আপনার প্রোফাইল পাতা/Profile</a></li>
+<li><a href="<?php bloginfo('url') ?>/wp-login.php?action=logout&amp;redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']) ?>">বের হয়ে যান/Logout</a></li>
+</ul>
+</li>
+</ul>
+<?php elseif ( get_option('users_can_register') ) : ?>
+<h2><p style="text-align: center;">মেম্বার লগিন প্যানেল/Login panel</p></h2>
+<hr/>
+<ul>
+<form action="<?php bloginfo('url') ?>/wp-login.php" method="post">
+<p>
+<label for="log"><input type="text" name="log" id="log" value="<?php echo wp_specialchars(stripslashes($user_login), 1) ?>" size="25" /> <br/>ইউজার নেম দিন/Username</label><br /><br/>
+<label for="pwd"><input type="password" name="pwd" id="pwd" size="25" /><br />
+পাসওয়ার্ড দিন/Password</label><br/><br/>
+<input type="submit" name="submit" value="লগিন/Login" />
+<label for="rememberme"><input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" />আমাকে মনে রাখুন/Remember Password</label><br />
+</p>
+<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
+</form>
+</li>
+
+<hr/>
+
+<a href="<?php bloginfo('url') ?>/wp-login.php?action=register">Registration/রেজিস্ট্রেশন</a>
+
+<br/>
+
+<a href="<?php bloginfo('url') ?>/wp-login.php?action=lostpassword">Reset Password/পাসওয়ার্ড পুনরুদ্ধার</a>
+</ul>
+<?php endif // get_option('users_can_register') ?>
+
+
+
+
+==============================================
+আপনার ওয়ার্ডপ্রেস ড্যাশবোর্ড প্যানেল থেকে theme editor lock করে দিন কোড দিয়ে
+============================================== 
+add_action('admin_init', 'cwc_lock_theme');
+function cwc_lock_theme() {
+global $submenu, $userdata;
+get_currentuserinfo();
+if ($userdata->ID != 1) {
+unset($submenu['themes.php'][5]);
+unset($submenu['themes.php'][15]);
+}
+}
+ 
+==============================================
+আপনার ওয়ার্ডপ্রেস সাইট এ কোন শব্দ কে অন্য শব্দ দিয়ে পরিবর্তন করুন
+==============================================
+হ্যালো, বন্ধুরা কেমন আছ। আবারো হাজির হলাম আপনাদের সামনে। আজকে ছোট একটা কোড নিয়ে আলোচনা করবো। আমরা যখন আমাদের ওয়ার্ডপ্রেস সাইট এ বাংলা ইন্সটল করি তখন অনেক শব্দের বাংলা অর্থ এমন যে শুনতে কেমন লাগে। যেমন Dashboard এর মানে দেখায় খেরখাতা। তাই আপনি চাইলে কিছু ওয়ার্ড এর মানে আপনি কোড দিয়ে Replace করতে পারেন। এর জন্য নিছের কোড গুলো আপনার থিমের functions.php ফাইলে অ্যাড করে দিন।
+
+add_filter('gettext', 'rename_admin_menu_items');
+add_filter('ngettext', 'rename_admin_menu_items');
+function rename_admin_menu_items($menu) {
+$menu = str_ireplace('Dashboard', 'প্রথম পাতা', $menu);
+$menu = str_ireplace('Media', 'ছবিসমুহ', $menu);
+$menu = str_ireplace('Comments', 'মন্তব্যসমুহ', $menu);
+return $menu;
+}
+এখানে আমি কিছু উদাহরন দিলাম।
+$menu = str_ireplace('Media', 'ছবিসমুহ', $menu);
+
+উপরের লাইন এ খেয়াল করুন। এখানে মনে করেন আপনি Media কে পরিবর্তন করবেন এখন উপরের Media এর পরিবরতে যে শব্দ ব্যবহার করতে চান সেটি ছবিসমুহ এর জায়গায় বসিয়ে দিন দেখবেন আপনার সাইট যত Media লেখা আছে সব পরিবর্তন হয়ে গেছে। এভাবে আপনার যত খুশি শব্দ অ্যাড করতে পারেন। আমি শুধু কয়েকটি শব্দ দিয়েছি দেখানোর জন্য।
+
+
+ 
+==============================================
+যেকোনো পোস্ট এ অ্যাড করুন লেখকের আভাটার
+==============================================
+<?php echo get_avatar( get_the_author_email(), '20' ); ?>
+
+
+==============================================
+আপনার ওয়েবসাইট এ ডিফল্ট Avatar পরিবর্তন করুন কোড দিয়ে
+==============================================
+ওয়ার্ডপ্রেস সাইট এ ওয়ার্ডপ্রেস এর দেয়া অনেক গুলো ডিফল্ট Avatar থাকে। আমরা যারা ওয়ার্ডপ্রেস দিয়ে সাইট বানাই তাদের অনেক সময় Branding এর কারনে এই ডিফল্ট Avatar পরিবর্তন করতে হয়। অনেকে এটা plugin দিয়ে করে তবে জে কাজ সামান্য কোড দিয়ে হয় সেটার জন্য কেন plugin ব্যবহার করতে যাবো। কাজতা খুবই সজা । সুধু নিছের কোড টুকু কপি করে আপনার ওয়ার্ডপ্রেস সাইট এর theme এর functions.php file এর আকদম নিছে paste করে দিন। আর আপনার সাইট এর theme এর ইমেজ directory তে যে ইমেজটা ব্যবহার করতে চান সেটা rename করে avatar.png format এ নিয়ে upload করে দিন ব্যাস কাজ শেষ। দেখবেন ডিফল্ট ইমেজ পরিবর্তন হয়ে গেছে।
+
+add_filter( 'avatar_defaults', 'crunchifygravatar' );
+function crunchifygravatar ($avatar_defaults) {
+$myavatar = get_bloginfo('template_directory') . '/images/avatar.png';
+$avatar_defaults[$myavatar] = "Anytech Man";
+return $avatar_defaults;}
+
+
+
+==============================================
+techtunes এর মতো টপ অথর শো করাতে চান? তাহলে নিয়ে নিন কোড
+==============================================
+<?php
+global $wpdb;
+$top_authors = $wpdb->get_results("
+SELECT u.ID, count(post_author) as posts FROM {$wpdb->posts} as p
+LEFT JOIN {$wpdb->users} as u ON p.post_author = u.ID
+WHERE p.post_status = 'publish'
+AND p.post_type = 'post'
+GROUP by p.post_author
+ORDER by posts DESC
+LIMIT 0,10
+");
+
+if( !empty( $top_authors ) ) {
+echo '<ul>';
+foreach( $top_authors as $key => $author ) {
+echo '
+<li>
+<div class="topauthor-info"><div class="topauthor-avatar">
+' . get_avatar( $author->ID , 40) . '</div>
+<div class="topauthor-description"><a href="' . get_author_posts_url( $author->ID ) . '">' . get_the_author_meta( 'nickname' , $author->ID ) . '</a>
+<br />» পোস্ট  '. $author->posts .'  টি
+</div></div></li>
+';
+}
+echo '</ul>';
+}
+?>
+
+এবার নিছের CSS কোড গুলো আপনার থিম এর CSS ফাইল বা style.css এ যোগ করে দিন।
+
+.topauthor-info {background: none repeat scroll 0 0 #FFFFFF;overflow: hidden;padding: 0px;}
+.topauthor-avatar {background: none repeat scroll 0 0 #FAFAFA;float: left;margin-right: 10px;padding: 0px;}
+.topauthor-description {float: left;max-width: 86%;font-size:14px;}
+
+==============================================
+আপনি চাইলে আপনার ওয়েবসাইট এর সব ট্যাগ কোড দিয়েও শো করতে পারেন
+==============================================
+<?php if ( function_exists('wp_tag_cloud') ) : ?>
+<h4>Popular Tags</h4>
+<ul>
+<li><?php wp_tag_cloud('smallest=8&largest=22'); ?></li>
+</ul>
+<?php endif; ?>
+
+==============================================
+আপনার ওয়েবসাইট এ Forced to logout এর টাইম সেট করে দিন কোড দিয়ে
+==============================================
+আপনার ওয়ার্ডপ্রেস সাইট এ যারা লগিন করবে এমন কি এডমিন সহ সবাইকে যদি আপনি চান যে একটা নির্দিষ্ট সমই পর অটোমেটিক logout হয়ে যাবে তাহলে একটা ছোট কাজকরে এটি করতে পারেন। এটি অবশ্য প্লাগিন দিয়েও করতে পারেন তবে যদি চান কোড দিয়ে করবেন তাহলে নিছের কোড টুকু কপি করে আপনার থিম এর functions.php ফাইল এর শেষে যোগ করে দিন। এখানে return 7200 এই লাইন এ ৭২০০ এর জাইগাই আপনি যে টাইম দিতে চান তা seconds এ কনভার্ট করে বসিএ দিন। এখানে ৭২০০ seconds মানে দুই ঘণ্টা দেয়া আছে।
+
+</p>
+function logged_in( $expirein ) {
+return 7200; // 2 hours in seconds
+}
+add_filter( 'auth_cookie_expiration', 'logged_in' );
+
+==============================================
+আপনার ওয়ার্ডপ্রেস সাইট এর favicon পরিবর্তন করুন কোড দিয়ে
+==============================================
+নিছের কোডটুকু কপি করে আপনার থিম এর functions.php ফাইল এর নিছে অ্যাড করে দিন। সুধু http://anytech.arzonebd.com/wp-content/anytech.gif এর জাইগায় আপনার ইমেজ এর লিঙ্ক দিন দেখবেন কাজ হয়ে গেছে। তবে ফাইল সাইজ 16*16 রাখবেন।
+
+function my_favicon() { ?>
+<link rel="shortcut icon" href="http://anytech.arzonebd.com/wp-content/anytech.gif" >
+<?php }
+add_action('wp_head', 'my_favicon');
+
+==============================================
+লগিন পেজের হেডার এর url এবং Powered by টেক্সট পরিবর্তন করুন কোড দিয়ে
+==============================================
+আমরা যখন কোন ওয়ার্ডপ্রেস সাইট এর লগিন পেজ এ যাই তখন ওখানে যে লোগো থাকে সেখানে মাউস রাখলে একটা লিঙ্ক মানে হল http://wordpress.org এবং Powered by WordPress শো করে। আপনি যদি চান যে এখানে আপনার সাইট এর লিঙ্ক এবং নাম এর যায়গায় সাইট এর নাম দেখাবেন তাহলে এদিকে আসুন। নিছের কোড গুলো আপনার সাইট এর থিম এর functions.php তে পেস্ট করুন।
+
+function anytech_login_header_url(){
+return "http://www.kingrussel.com";
+} add_action('login_headerurl', 'anytech_login_header_url');
+function anytech_login_header_link_title(){
+return "Powered By King Russel";
+} add_action('login_headertitle', 'anytech_login_header_link_title');
+
+ 
+
+==============================================
+Dashboard এর favicon change করে নিন একেবারে সহজে
+==============================================
+নিছের কোড টুকু আপনারথিম এর functions.php ফাইল এর নিছে অ্যাড করে দিন। সুধু  http://www.anytech.arzonebd.com/favicon.png   এর জাইগায় আপনার ইমেজ এর লিঙ্ক দিন দেখবেন কাজ হয়ে গেছে। তবে ফাইল সাইজ 16*16 রাখবেন।
+
+function fidafavicon() {
+echo '<link rel="Shortcut Icon" type="image/x-icon" href="http://www.anytech.arzonebd.com/favicon.png" />';
+}
+add_action( 'admin_head', 'fidafavicon' );
+
+==============================================
+wp-logo remove করুন কোড দিয়ে।
+==============================================
+নিছের কোড টুকু কপি করে আপনার থিম এর functions.php তে অ্যাড করে দেন ব্যাস কাজ ওকে।
+
+add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+function annointed_admin_bar_remove() {
+global $wp_admin_bar;
+
+/* Remove their stuff */
+$wp_admin_bar->remove_menu('wp-logo');
+}
+
+
+==============================================
+QUERY CODE FOR RELATED POST WITH AND WITHOUT THUMBNAIL
+==============================================
+<?php $orig_post = $post;
+    global $post;
+    $categories = get_the_category($post->ID);
+    if ($categories) {
+    $category_ids = array();
+    foreach($categories as $individual_category) $category_ids[] = $individual_category->term_id;
+
+    $args=array(
+    'category__in' => $category_ids,
+    'post__not_in' => array($post->ID),
+    'posts_per_page'=> 6, // Number of related posts that will be shown.
+    'caller_get_posts'=>1
+    );
+
+    $my_query = new wp_query( $args );
+    if( $my_query->have_posts() ) {
+    echo '<div class="single_coment_all">';
+    while( $my_query->have_posts() ) {
+    $my_query->the_post();?>
+	<div class="single_coment floatleft fix">
+		<div class="relatedthumb_img">
+			<a href="<?php the_permalink()?>" rel="bookmark" title="<?php the_title(); ?>">
+				<?php the_post_thumbnail('related_image'); ?>
+			</a>
+		</div>
+		<div class="comments_caption">
+			<div class="comments_caption_left">
+				<p><?php the_category(', '); ?></p>
+			</div>
+			<div class="comments_caption_right">
+				<a href="<?php the_permalink(); ?>"><h2><?php the_title(); ?></h2></a>
+			</div>
+		</div>
+	</div>
+	<?php
+    }
+    echo '</div>';
+    }
+    }
+    $post = $orig_post;
+    wp_reset_query(); ?>
+
+=============================================
+কোন একটা নির্দিষ্ট ক্যাটেগরির পপুলার পোস্ট শো করুন লিস্ট আকারে
+=============================================	
+<?php
+
+$args=array(
+'cat' => 58, // this is category ID
+'orderby' => 'comment_count',
+'order' => 'DESC',
+'post_type' => 'post',
+'post_status' => 'publish',
+'posts_per_page' => 6, // how much post you want to display
+'caller_get_posts'=> 1
+);
+
+$my_query = null;
+$my_query = new WP_Query($args);
+if( $my_query->have_posts() ) { ?>
+
+<ul>
+<?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
+
+<li><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
+
+<?php  endwhile; ?>
+</ul>
+<?php }
+
+wp_reset_query(); ?>
+
+==============================================
+copy , paste , cut বাটান এড করুন Visual Editor এ
+==============================================
+function enable_more_buttons($buttons) {
+ $buttons[] = 'copy';
+ $buttons[] = 'cut';
+ $buttons[] = 'paste';
+ return $buttons;
+ }
+ add_filter("mce_buttons_2", "enable_more_buttons");	
+
+==============================================
+ পোস্টের মেটা ডিসক্রিপশন অটোমেটিক যোগ করাঃ
+==============================================
+function create_meta_desc() {
+global $post;
+if (!is_single()) { return; }
+$meta = strip_tags($post->post_content);
+$meta = strip_shortcodes($post->post_content);
+$meta = str_replace(array(“\n”, “\r”, “\t”), ‘ ‘, $meta);
+$meta = substr($meta, 0, 125);
+echo “<meta name=’description’ content=’$meta’ />”;
+}
+add_action(‘wp_head’, ‘create_meta_desc’); 
+
+==============================================
+লেফ্ট সাইড এর wordpress text টা পরিবর্র্তন করার জন্য নিচের Function টা এড করে দিন । text এ আপনার ইচ্ছা মত  পরিবর্র্তন করে নিন ।
+==============================================
+function remove_footer_admin () {
+echo 'Thank You For Creating By <a href="http://kingrussel.com">King Russel</a>';
+}
+add_filter('admin_footer_text', 'remove_footer_admin');
+
+
+==============================================
+page k login and logout option onojayi set korben
+==============================================
+<?php if (is_user_logged_in() ): ?>
+	<a href="<?php echo wp_logout_url() ?>" title="Logout">Logout</a>
+<?php else: ?> 
+        <a href="http://example.com/wp-login.php" title="Logout">Member Login</a>
+<?php endif ?>
+
+==============================================
+আপনার সাইট এর সব লেখককে একসাথে দেখানড্র পডাউন মেনু হিসেবে
+==============================================
+<li id="users">
+ <h2><?php _e('users:'); ?></h2>
+   <form action="<?php bloginfo('url'); ?>" method="get">
+   <?php
+     $args = array(
+     'exclude'                 => '1',
+     'name'                    => 'authors',
+     'who'                     => 'authors'
+    );
+    wp_dropdown_users($args);
+   ?>
+   <input type="submit" name="submit" value="view" />
+   </form>
+</li>
+	
+==============================================
+query code for Fraction Slider
+==============================================
+<?php while ( have_posts() ) : the_post(); ?>
+
+<?php
+
+global $post;
+$images = get_post_meta( $post->ID, '_wpb_sub_image', true );
+
+foreach ($images as $img){
+echo "<div class='col-md-2 single_img'><a class='grouped_elements' rel='group1' href='$img'><img class='img-responsive' src='$img' alt='' /></a></div> ";
+}
+
+?>
+
+<?php endwhile; // end of the loop. ?>
+	
+==============================================
+query code for display post from each category
+==============================================
+<?php
+  // array of category IDs
+  $categories =  array(10,9,8,7,6,5,4,3,2,1);
+
+  foreach ($categories as $cat) :
+    $post = false;
+    $post = get_posts('cat='.$cat.'&posts_per_page=1');
+    if($post) :
+      $post = $post[0];
+      setup_postdata($post); ?>
+    // Your content for loop 
+
+    <?php endif; ?>
+  <?php endforeach; ?>
+
+
+====================================================
+Here’s how to create a custom post template for a specific category:
+====================================================
+
+ 
+function get_custom_cat_template($single_template) {
+     global $post;
+ 
+       if ( in_category( 'category-name' )) {
+          $single_template = dirname( __FILE__ ) . '/single-template.php';
+     }
+     return $single_template;
+}
+ 
+add_filter( "single_template", "get_custom_cat_template" ) ;
+ 
+
+
+What you have to do is just copy and paste this code in your functions.php file and don’t forget to change ‘category-name’ to the name of the category you are aiming and, of course, change ‘/single-template.php’ to your post template file for this category.
+
+And here’s another snippet, if you need to create a custom post template for a specific custom post type:
+
+
+ 
+function get_custom_post_type_template($single_template) {
+     global $post;
+ 
+       if ($post->post_type == 'custom-post-type') {
+          $single_template = dirname( __FILE__ ) . '/single-template.php';
+     }
+     return $single_template;
+}
+ 
+add_filter( "single_template", "get_custom_post_type_template" ) ;
+ 
+
+What you have to do is again copy and paste it in your functions.php file and change ‘custom-post-type’ and ‘/single-template.php’ to whatever works fine for you.
+
+
+==============================================
+How to disable theme and plugin editor from WordPress dashboard?
+==============================================
+//Remove theme and plugin editor links
+function ccw_hide_editor()
+{
+	remove_submenu_page('themes.php','theme-editor.php');
+	remove_submenu_page('plugins.php','plugin-editor.php');
+}
+add_action('admin_init','ccw_hide_editor');
+
+The Problem with above code is that, it does not disable the editor but remove the link from dashboard. The editor can still be used by accessing link from URL in browser.
+To completely disable the editor from WordPress dashboard copy the following code and paste it inside wp-config.php file located in root folder of WordPress installation.
+
+
+//Disable theme and plugin editor
+define( 'DISALLOW_FILE_EDIT', true );
+
+
+==============================================
+	//code for logo in middle of menu  
+============================================== 
+
+paste this code in main.js 
+-----------------------------------
+jQuery( document ).ready(function() {
+var menu = parseInt(jQuery('.main-menu li').length/2);
+var structure = [
+'<li>',
+'<a href="index.php"><span class="center-logo"></span></a>',
+'</li>' ];
+jQuery(structure.join('')).insertAfter( jQuery('.main-menu li').eq(menu - 1) );
+});
+
+paste this code in  header.php   
+-----------------------------------	
+<ul class="main-menu">
+<li><a href="#">Home</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Service</a></li>
+<li><a href="#">Contuct</a></li>
+</ul>
+
+===============================================
+Code for increase media upload limitation paste in htaccess file
+===============================================
+
+php_value upload_max_filesize 20M
+php_value post_max_size 20M
+php_value max_execution_time 200
+php_value max_input_time 200
+
+============================================
+code for login form create in template
+===============================================
+<?php
+if ( ! is_user_logged_in() ) { // Display WordPress login form:
+    $args = array(
+        'redirect' => admin_url(), 
+        'form_id' => 'loginform-custom',
+        'label_username' => __( 'Username custom text' ),
+        'label_password' => __( 'Password custom text' ),
+        'label_remember' => __( 'Remember Me custom text' ),
+        'label_log_in' => __( 'Log In custom text' ),
+        'remember' => true
+    );
+    wp_login_form( $args );
+} else { // If logged in:
+    wp_loginout( home_url() ); // Display "Log Out" link.
+    echo " | ";
+    wp_register('', ''); // Display "Site Admin" link.
+}
+?>
+
+
+==========================================
+	code for contact form 7 redirect link
+==========================================
+on_sent_ok: "location.replace('http://www.kingrussel.com');"
+			or
+on_sent_ok: "location = 'http://example.com/';"
+
+contact form 7 auto br remove code should be place in wp config file.
+------------------------------------------
+define('WPCF7_AUTOP', false);
+
+
+==================================================
+		bootstrap carousel query code
+==================================================
+  <!-- Carousel-->
+<?php 
+$items = new WP_Query(array(
+'post_type' => 'banner-items',
+'posts_per_page' => -1,
+'meta_key' => '_thumbnail_id'
+));
+$count = $items->found_posts;
+?>	
+	
+  <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+      <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	  <?php for($num = 1; $num < $count; $num++){ ?>
+      <li data-target="#myCarousel" data-slide-to="<?php echo $num; ?>"></li>
+	  <?php } ?>
+    </ol>
+
+    <div class="carousel-inner">
+<?php 
+        $ctr = 0;
+        while ( $items->have_posts() ) :
+          $items->the_post();
+          $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+          $custom = get_post_custom($post->ID);
+          $link = $custom["more-link"][0];
+          $class = $ctr == 0 ? ' active' : '';
+        ?>
+	
+        <div class="item<?php echo $class; ?>" id="<? the_ID(); ?>"> 
+		    <img src="<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), '' ); echo $image[0]; ?>">
+			<div class="container">
+			  <?php the_content(); ?>
+			</div>
+        </div>
+	<?php $ctr++; 
+        endwhile;  ?>
+      
+      
+    </div>
+    <!-- /.carousel-inner --> 
+    
+    <!-- Controls --> 
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <span class="fa fa-angle-left fa-5x"></span> </a> 
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <span class="fa fa-angle-right fa-5x"></span> </a> 
+	
+	</div>
+  <!-- /.carousel --> 
+  
+  
+==================================================
+	function er maddome	file call korar niyom
+==================================================
+function vaious_theme_file(){
+
+ global $wp_styles;
+
+ /*
+  * Adds JavaScript to pages with the comment form to support
+  * sites with threaded comments (when in use).
+  */
+ if ( is_singular() && comments_open() && get_option( 'thread_comments' ) )
+  wp_enqueue_script( 'comment-reply' );
+    
+    /* Registering styles */
+    wp_register_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '1', 'all' );
+    wp_register_style( 'bootstrap-theme', get_template_directory_uri() . '/css/bootstrap-theme.min.css', array(), '1', 'all' );
+    wp_register_style( 'prettyPhoto', get_template_directory_uri() . '/css/prettyPhoto.min.css', array(), '1', 'all' );
+    wp_register_style( 'responsive', get_template_directory_uri() . '/css/responsive.css', array(), '1', 'all' );
+
+/*Enqueue styles */
+    wp_enqueue_style( 'bootstrap', get_stylesheet_uri(), array(), '1', 'all' );
+    wp_enqueue_style( 'bootstrap-theme', get_stylesheet_uri(), array(), '1', 'all' );
+    wp_enqueue_style( 'prettyPhoto', get_stylesheet_uri(), array(), '1', 'all' );
+    wp_enqueue_style( 'responsive', get_stylesheet_uri(), array(), '1', 'all' );
+     
+    //Loads our main stylesheet
+    wp_enqueue_style( 'various-main-style', get_stylesheet_uri() );
+    
+    //Loads all javascript files
+    
+     wp_enqueue_script( 'jquery-masonry', array( 'jquery' ) );
+     wp_enqueue_script( 'v-mixitup', get_template_directory_uri() . '/js/jquery.mixitup.min.js', array('jquery'), '1.0', true );
+     wp_enqueue_script( 'v-prettyPhoto', get_template_directory_uri() . '/js/jquery.prettyPhoto.min.js', array('jquery'), '1.0', true );
+     wp_enqueue_script( 'v-jflickrfeed', get_template_directory_uri() . '/js/jflickrfeed.min.js', array('jquery'), '1.0', true );
+     wp_enqueue_script( 'v-jribbble', get_template_directory_uri() . '/js/jquery.jribbble-1.0.1.min.js', array('jquery'), '1.0', true );
+     wp_enqueue_script( 'v-bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '1.0', true );
+     wp_enqueue_script( 'v-main', get_template_directory_uri() . '/js/main.js', array('jquery'), '1.0', true );
+    
+   
+}
+add_action('wp_enqueue_scripts', 'vaious_theme_file');
+
+=======================================================
+bxslider.com/examples/thumbnail-pager-1   dynamic code by custom post
+=======================================================
+<div id="slider" class="row" style="padding:0; position:relative">
+	<ul class="bxslider" >
+		<?php  $args = array(
+		 	'post_type' => 'slider',
+		 	'posts_per_page' => 4,
+		 	'order' => 'DESC',
+		 	'orderby' => 'date'
+		);?>
+
+		<?php $slider = new WP_Query($args); while($slider->have_posts()) : $slider->the_post(); ?>
+	  <li>
+	  	<?php the_post_thumbnail('slider'); ?>
+		<div class="col-md-7 hidden-sm hidden-xs" style="padding:0">
+			<div class="titulo">
+				<h3><?php the_title(); ?></h3>
+			</div>
+		</div>
+	  </li>
+
+	<?php endwhile; wp_reset_postdata(); ?>
+	</ul>
+
+	<div class="container navegador hidden-sm hidden-xs">
+		<div class="row">
+			<div class="col-md-5 col-md-offset-7 text-right" style="padding:0;" >
+				<div id="bx-pager">
+					<?php  $args = array(
+					 	'post_type' => 'slider',
+					 	'posts_per_page' => 4,
+					 	'order' => 'DESC',
+					 	'orderby' => 'date'
+					);?>
+					<?php $numero = 0; ?>
+						<?php $slider = new WP_Query($args); while($slider->have_posts()) : $slider->the_post(); ?>
+					  		<a data-slide-index="<?php echo $numero; ?>" href=""><?php the_post_thumbnail('thumbnailSlider'); ?></a>
+						<?php $numero++; ?>
+					<?php endwhile; wp_reset_postdata(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+</div> <!--/#slider -->
+
+=======================================================
+bxslider.com/examples/thumbnail-pager-1   dynamic code by Metabox slider
+=======================================================
+<div class="portfolio_single_wrapper fix">
+				
+				<?php 
+				$spyr_demo_slider = get_post_meta( $post->ID, 'spyr_demo_slider', true );
+				
+				echo '<div id="portfolio_single_slider" class="fix">';
+				foreach( $spyr_demo_slider as $slide ) {
+							
+							echo '<div class="portfolio_single_item fix">
+							<img src="'. $slide['image'] .'" alt="" />
+							</div>';
+				}
+				echo '</div>';
+
+				?>
+				
+				
+			<?php 
+				$spyr_demo_slider = get_post_meta( $post->ID, 'spyr_demo_slider', true );
+				$numero = 0;
+				
+				echo '<div id="portfolio_single_pager" class="fix">';
+				foreach( $spyr_demo_slider as $slide ) {
+					
+							
+							echo '<a data-slide-index="'.$numero.'" class="pager" href=""><img src="'. $slide['image'] .'" alt="" /></a>';
+					$numero++;
+				}
+				
+				echo '</div>';
+				
+				?>
+				<div class="portfolio_single_content fix">
+					<h2><?php the_title(); ?></h2>
+					<?php the_content(); ?>
+				</div>
+			</div>
+            <!-- Portfolio Single Page Content End There -->
+==========================================
+		/* Wordpress Common Style */
+		============================
+		
+/* code for dropdown */
+ 
+.menu-item-has-children{position:relative;}
+.menu-item-has-children:hover{display:block;}
+#menu-menu-1 > .menu-item-has-children:hover > a{background:#ffd71f;color:#181f2a;}
+#menu-menu-1 > .menu-item-has-children > ul.sub-menu{background: none repeat scroll 0 0 #ffd71f;
+left:999999px;position: absolute;top: 100%;width: 180px;z-index: 999;}
+#menu-menu-1 > .menu-item-has-children:last-child > ul.sub-menu{right:999999px;left:inherit;}
+#menu-menu-1 > li.menu-item-has-children:hover ul.sub-menu{display: block;left: 0;left:inherit;}
+#menu-menu-1 > li.menu-item-has-children:last-child:hover ul.sub-menu{display: block;right: 0;}
+.menu-item-has-children > ul > li{display: block;margin: 0;text-align: left;width: 100%;}
+.menu-item-has-children:last-child > ul > li{text-align:right;}
+.menu-item-has-children > ul > li > a{border: 0 none !important;font-size: 13px;border-radius:0px !important;padding: 10px 15px;display:block !important;color:#181f2a;}
+#menu-menu-1 > .menu-item-has-children > ul > li > a:hover{border:0px;background:#171F2C !important;border-radius:0px;color:#fff;}
+		
+/* Style for Index PHP  & Page.php */
+.blog_content{margin: 20px 0; overflow: hidden;width: 100%;}
+.page_blog_post{}
+.single_blog_post{}
+.single_blog_post h2{padding: 10px 0;color: #000;font-size: 22px;margin-bottom: 0;text-align: center;}
+
+
+/* 404 style code */
+.error_message { overflow: hidden; padding: 30px }
+.four_zero_four { font-size: 50px; text-align: center }
+.four_zero_four span { display: block; font-size: 200px; line-height: 190px }
+
+/* style for archieve */
+.latest_frm_cat_title { border-bottom: 3px solid #cf0000; font-size: 20px; line-height: 25px; margin-left: 10px }
+.archive_title {font-size: 31px;margin-bottom: 45px;margin-left: 0px;padding: 15px 0;text-align: center}
+.archive_not_found {-moz-box-shadow: 1px 3px 9px;-webkit-box-shadow: 1px 3px 9px;box-shadow: 1px 3px 9px;font-size: 100px;padding: 10px 0 20px;text-align: center}
+.archive_not_found h3 {font-family: italic}
+.archive_page{padding: 0px 25px}
+.archive_content{border: 1px solid #ddd;margin-bottom: 20px;padding: 15px;min-height: 164px;}
+.archive_content h2{}
+.archive_content p{}
+.archive_content a{color: #CF0000;
+font-weight: bold;
+text-transform: uppercase;
+float: right;
+border-bottom: 1px solid #CF0000;
+margin-top: 5px;}
+.archive_img{float: left;
+width: 20%;
+margin-right: 1%;}
+
+/* style for search php */
+h2.latest_frm_cat_title span {color: red}
+.single_search {border: 1px solid #ddd;margin-bottom: 20px;padding: 15px }
+.single_footer ul li a.popular_link_img{float: left;margin-right: 3%;width: 27%;}
+.single_footer ul li a.popular_link_img img{width:100%;height:80px;}
+.single_footer ul li a.popular_link{float:right;width: 70%;}
+.archive_not_found {-moz-box-shadow: 1px 3px 9px;-webkit-box-shadow: 1px 3px 9px;box-shadow: 1px 3px 9px;font-size: 100px;padding: 10px 0 20px;text-align: center}
+.archive_title {font-size: 31px;margin-bottom: 45px;margin-left: 0px;padding: 15px 0;text-align: center}
+
+
+
+
+
+
+?>

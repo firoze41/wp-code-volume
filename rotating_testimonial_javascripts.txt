@@ -1,0 +1,16 @@
+/*Paste this code in footer.php for rotating testimonial*/
+<script language="javascript"> 
+$(document).ready(function(){
+	$('#testimonials .slide');
+	setInterval(function(){
+		$('#testimonials .slide').filter(':visible').fadeOut(1000,function(){
+			if($(this).next('.slide').size()){
+				$(this).next().fadeIn(1000);
+			}
+			else{
+				$('#testimonials .slide').eq(0).fadeIn(1000);
+			}
+		});
+	},15000);	
+});	
+</script>

@@ -1,0 +1,41 @@
+Add an amazing testimonial in your wordpress theme easily. Follow step be step:
+
+ 
+
+Step-1: First need to register custom post for testimonial. Than need to register custom meta box for testimonial info like:
+
+    Person’s Name who is giving the Testimonial
+    Their position in the Company
+    Company Name
+    Link to the company page on our Portfolio
+    Testimonial test (which will be the post body)
+
+**Taking this pastebin code in your functions.php for register custom post and custom meta box.
+
+ 
+
+Pastebin: http://pastebin.com/PLnNbe1R
+
+ 
+
+Step-2: Now need to testimonial query where you want display testimonial. Taking this pastebin code in your fixed position for display testimonial.
+
+ 
+
+Pastebin: http://pastebin.com/xCtbGCbU
+
+ 
+
+Step-3: Need to do is add the JavaScript that will rotate the content. This pastebin code paste in your footer.php here you can customize rotating time 15000.
+
+ 
+
+Pastebin: http://pastebin.com/m42L9Z20
+
+ 
+
+Step-4:Taking this style in your style.css/
+
+ 
+
+Pastebin: http://pastebin.com/vHS0zdur

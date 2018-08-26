@@ -1,0 +1,28 @@
+// if user want to select icon from select option
+
+$meta_boxes['test_metabox'] = array(
+		'id'         => 'test_metabox',
+		'title'      => __( 'Font Awesome', 'cmb' ),
+		'pages'      => array( 'acme_product', ), // Post type
+		'context'    => 'normal',
+		'priority'   => 'high',
+		'show_names' => true, // Show field names on the left
+		// 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
+		'fields'     => array(
+			array(
+				'name'       => __( 'Font Awesome', 'cmb' ),
+				'desc'       => __( 'write your icon name', 'cmb' ),
+				'id'         =>'promo-icon',
+				'type'       => 'select',
+				'show_on_cb' => 'cmb_test_text_show_on_cb', // function should return a bool value
+				// 'sanitization_cb' => 'my_custom_sanitization', // custom sanitization callback parameter
+				// 'escape_cb'       => 'my_custom_escaping',  // custom escaping callback parameter
+				// 'on_front'        => false, // Optionally designate a field to wp-admin only
+				// 'repeatable'      => true,
+				'options' => array(
+					'Home' => __( 'Home Icon', 'cmb' ),
+					'facebook'   => __( 'Facebook Icon', 'cmb' ),
+					'Twitter'     => __( 'Twitter Icon', 'cmb' ),
+					'search'     => __( 'Search Icon', 'cmb' ),
+				),
+			),

@@ -1,0 +1,3 @@
+<?php echo rand(1,4);?>
+
+Uses: <img src="<?php echo get_template_directory_uri(); ?>/images/banners/<?php echo rand(1,4);?>.jpg"/>

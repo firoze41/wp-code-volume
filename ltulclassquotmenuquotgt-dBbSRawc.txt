@@ -1,0 +1,10 @@
+<?php if (has_nav_menu( 'main-menu' )) {
+wp_nav_menu( 
+array(
+'menu' => 'main-menu', 
+'container' => '',
+'items_wrap' => '<ul class="nav navbar-nav">%3$s</ul>' 
+));
+}
+
+?>

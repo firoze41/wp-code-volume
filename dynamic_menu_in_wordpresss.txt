@@ -1,0 +1,22 @@
+// add menu support and fallback menu if menu doesn't exist
+	
+function wpj_register_menu() {
+	if (function_exists('register_nav_menu')) {
+		register_nav_menu( 'wpj-main-menu', __( 'Main Menu', 'brightpage' ) );
+	}
+}
+function wpj_default_menu() {
+	echo '<ul id="dropmenu">';
+	if ('page' != get_option('show_on_front')) {
+		echo '<li><a href="'. home_url() . '/">Home</a></li>
+	}
+	wp_list_pages('title_li=');
+	echo '</ul>';
+	}
+add_action('init', 'wpj_register_menu');
+
+/*Call in menu position*/
+<?php
+	if (function_exists('wp_nav_menu')) {
+		wp_nav_menu(array('theme_location' => 'wpj-main-menu', 'menu_class' => 'dropdown', 'fallback_cb' => 'wpj_default_menu'));
+	}

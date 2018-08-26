@@ -1,0 +1,25 @@
+Step One
+================
+
+Download/copy breadcrumbs.php data from here: http://pastebin.com/V86kd1zX
+
+Step Two
+================
+
+Create a folder called inc. Create a php file called breadcrumbs.php & then paste data. 
+
+Step Three
+================
+
+Call breadcrumbs.php in Theme Functions
+
+include_once('inc/breadcrumbs.php'); 
+
+Step Four
+================
+
+Use it by code below 
+
+<div class="breadcumbs">
+	<?php if (function_exists('wordpress_breadcrumbs')) wordpress_breadcrumbs(); ?>
+</div>

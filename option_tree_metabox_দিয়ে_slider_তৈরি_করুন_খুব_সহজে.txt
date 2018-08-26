@@ -1,0 +1,28 @@
+স্টেপ ১ = নিচের কোড metabox file এ paste করুন 
+ 
+
+				array(
+					'id'          => 'spyr_demo_slider',
+					'label'       => __( 'Slider', 'text-domain' ),
+					'desc'        => __( 'Your description', 'text-domain' ),
+					'type'        => 'slider',
+				),
+	
+স্টে্রুন২ = নিচের কোড template file এ paste করুন যেখানে slider হবে
+
+<?php 
+$spyr_demo_slider = get_post_meta( $post->ID, 'spyr_demo_slider', true );
+ 
+// Loop through the array to build your Slider.
+// Note that every slider is different
+// We have access to the following array keys
+// title, description, image and link
+echo '<div id="owl-demo" class="owl-theme">';
+foreach( $spyr_demo_slider as $slide ) {
+    echo '<div class="item"><img src="'. $slide['image'] .'" width="100%" height="auto"
+          alt="'. $slide['description'] .'" title="'. $slide['title'] .'" /></div>';
+}
+echo '</div>';
+
+?>
+কাজ শেষ ।

@@ -1,0 +1,61 @@
+Step-1: Copy this code and paste your functions.php
+function create_post_type() {
+	
+	register_post_type( 'slider',
+			array(
+				'labels' => array(
+						'name' => __( 'Slider' ),
+						'singular_name' => __( 'Slide' ),
+						'add_new' => __( 'Add New' ),
+						'add_new_item' => __( 'Add New Slide' ),
+						'edit_item' => __( 'Edit Slide' ),
+						'new_item' => __( 'New Slide' ),
+						'view_item' => __( 'View Slide' ),
+						'not_found' => __( 'Sorry, we couldn\'t find the Slide you are looking for.' )
+				),
+			'public' => true,
+			'publicly_queryable' => true,
+			'exclude_from_search' => true,
+			'menu_position' => 14,
+			'has_archive' => true,
+			'hierarchical' => true,
+			'capability_type' => 'post',
+			'rewrite' => array( 'slug' => 'slide' ),
+			'supports' => array( 'title', 'editor', 'custom-fields', 'thumbnail' )
+			)
+		);
+			
+	}	
+add_action( 'init', 'create_post_type' );
+/*Enable thumbnail and corp thumbnail taking this code in your functions.php*/
+
+	add_theme_support( 'post-thumbnails', array( 'post', 'slider') );
+	add_image_size( 'slider-image', 670, 325, true );
+
+Step-2. Copy paste this code in nivoslider between <div class="slider-wrapper theme-default"> /*Paste here code*/ and </div>
+            
+
+	<div id="slider" class="nivoSlider">
+		/*This query for slider images*/	
+		<?php
+			global $post;
+			$args = array( 'posts_per_page' => -1, 'post_type'=> 'slider' );
+			$myposts = get_posts( $args );
+			foreach( $myposts as $post ) : setup_postdata($post);
+		 ?>
+				<img src="<?php $slide_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 				'slider-image' ); echo $slide_image[0]; ?>" alt="" title="#<?php the_ID(); ?>"/>
+
+			<?php endforeach; ?>					
+        </div>
+		/*This code for slider caption query*/	
+			<?php
+				global $post;
+				$args = array( 'posts_per_page' => -1, 'post_type'=> 'slider' );
+				$myposts = get_posts( $args );
+				foreach( $myposts as $post ) : setup_postdata($post); 
+			?>
+				<div id="<?php the_ID(); ?>" class="nivo-html-caption">
+					<?php the_content(); ?>
+				</div>
+				
+				<?php endforeach; ?>

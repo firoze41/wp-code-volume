@@ -1,0 +1,8 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".post").each(function() {
+			var thiseliment = $(this);
+			$(this).find('.featured').appendTo($(this).find('.my_featured_media'));
+		});
+	});		
+</script>

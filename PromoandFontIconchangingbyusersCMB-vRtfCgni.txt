@@ -1,0 +1,101 @@
+Promo font awesome icon easily changing by users
+// example-function.php
+
+$meta_boxes['test_metabox'] = array(
+		'id'         => 'test_metabox',
+		'title'      => __( 'Font Awesome', 'cmb' ),
+		'pages'      => array( 'acme_product', ), // Post type
+		'context'    => 'normal',
+		'priority'   => 'high',
+		'show_names' => true, // Show field names on the left
+		// 'cmb_styles' => true, // Enqueue the CMB stylesheet on the frontend
+		'fields'     => array(
+			array(
+				'name'       => __( 'Font Awesome', 'cmb' ),
+				'desc'       => __( 'write your icon name', 'cmb' ),
+				'id'         =>'promo-icon',
+				'type'       => 'text',
+				'show_on_cb' => 'cmb_test_text_show_on_cb', // function should return a bool value
+				// 'sanitization_cb' => 'my_custom_sanitization', // custom sanitization callback parameter
+				// 'escape_cb'       => 'my_custom_escaping',  // custom escaping callback parameter
+				// 'on_front'        => false, // Optionally designate a field to wp-admin only
+				// 'repeatable'      => true,
+			),
+
+
+
+
+
+
+
+// custom post promos (custom-post.php)
+
+function create_post_type() {
+  register_post_type( 'acme_product',
+    array(
+      'labels' => array(
+        'name' => __( 'Products' ),
+        'singular_name' => __( 'Product' ),
+		'add_new'=>_('Add New product')
+      ),
+      'public' => true,
+      'has_archive' => true,
+	  'rewrite'=> array( 'slug' => 'product' ),
+	  'supports'=> array( 'title', 'editor', 'custom-fields', 'author', 'comments', '' )
+    )
+  );
+}
+add_action( 'init', 'create_post_type' );
+
+
+// From html page 
+
+		<div class="promo_content_area fix">
+			<div class="container">
+				<div class="row">
+						<?php
+						global $post;
+						$args = array( 'posts_per_page' => 4, 'post_type'=> 'acme_product');
+						$myposts = get_posts( $args );
+						foreach( $myposts as $post ) : setup_postdata($post); ?>
+						<?php
+						$promo_icon = get_post_meta( $post->ID, 'promo-icon', true );
+						?>
+						<div class="col-md-3">
+						<div class="promo_content">						
+							<?php if($promo_icon):?>
+							<i class="fa fa-<?php echo $promo_icon;?> icon-all"></i>
+							<?php else:?>
+								<i class="fa fa-home icon-all"></i>
+							<?php endif;?>
+				
+							<h2><?php the_title();?></h2>
+							<?php the_content();?>
+						</div>
+						</div>
+						<?php endforeach;?>
+				</div>
+			</div>
+	   	</div>
+
+
+
+
+
+// have to show in (functions.php)
+
+
+include_once('inc/custom-posts.php');
+	
+	
+// Initialize the metabox class
+
+function be_initialize_cmb_meta_boxes() {
+    if ( !class_exists( 'cmb_Meta_Box' ) ) {
+        require_once( 'inc/cmb/init.php' );
+    }
+}	
+add_action( 'init', 'be_initialize_cmb_meta_boxes', 9999 );	
+	
+	
+include_once('inc/cmb/example-functions.php');
