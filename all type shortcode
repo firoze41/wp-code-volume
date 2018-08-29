@@ -1,0 +1,94 @@
+/*
+shortcode
+*/
+
+function primi_simple_shortcode($atts){
+	extract(shortcode_atts(array(
+       'text' => 'Green land multipurpose company'
+	),$atts));
+
+	return $text;
+}
+add_shortcode('simpleShortcode','primi_simple_shortcode');
+
+
+// short codes 
+function my_shortcodes_init($attr){
+
+	$default = array(
+		'default'=> 'd-m-y'
+	);
+
+	$data = shortcode_atts($default,$attr);
+
+	return date($data['default']);
+}
+add_shortcode('date_data','my_shortcodes_init');
+
+
+// 23.7.90.3750&zoom=12&size=600x400
+
+function shortcode_google_map($attr){
+	$default = array(
+		'lat'   =>'23.7',
+		'lon'   =>'90.3750',
+		'zoom'  =>'12',
+		'width' =>400,
+		'height'=>600
+		
+
+	);
+	$map_data = shortcode_atts($default,$attr); // overwrite default data
+	$img = '<img src="//maps.googleapis.com/maps/api/staticmap?center=%f.%f&zoom=%d&size=%dx%d">';
+
+	return sprintf($img,$map_data['lat'],$map_data['lon'],$map_data['zoom'],$map_data['width'],$map_data['height']);
+}
+add_shortcode('gmap','shortcode_google_map');
+
+
+
+	
+function youtube_videos($attr){
+	$default = array(
+		'width'    => 560,
+		'height'   => 315,
+		'id' => '1LZ11dZwPz8'
+
+	);
+	$videos = shortcode_atts($default,$attr);
+	$iframe =  '<iframe width="%d" height="%d" src="https://www.youtube.com/embed/'.$videos['id'].'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+	return sprintf($iframe,$videos['width'],$videos['height']);
+}
+add_shortcode('youtube_video','youtube_videos');
+
+
+
+// nested shortcode
+
+function red_shortcode($attr,$contents = null){
+
+	$contents = do_shortcode($contents);
+	return '<span style="color:red">'.$contents.'</span>';
+}
+add_shortcode('red','red_shortcode');
+
+
+
+function purple_shortcode($attr,$contents = null){
+
+	$contents = do_shortcode($contents);
+	return '<span style="color:purple">'.$contents.'</span>';
+}
+add_shortcode('purple','purple_shortcode');
+
+
+
+
+// there are three type of shortcode
+
+/*
+[ct] // single shortcode
+[ct][/ct] // double shortcode
+[ct][red][/red][/ct] // nested shortcode
+
+*/
