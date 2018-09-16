@@ -1,0 +1,10 @@
+// To show the post data
+<?php get_post_meta(get_the_ID(),'metaname',true);?>
+
+// To show customizer/costomization data
+<?php echo get_theme_mod('color_change');?>
+
+// To show custom widget data
+For name = <?php echo $this->get_field_name('title');?>
+For label for/id =  <?php echo $this->get_field_id('title');?>
+For value = <?php echo $title;?>
